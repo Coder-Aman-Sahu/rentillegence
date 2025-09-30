@@ -42,3 +42,15 @@ Return to the root directory and start the application:
 
 cd ..
 nodemon app.js
+
+
+🔹 Steps to sync local with remote after web changes:
+
+Fetch latest changes from GitHub
+
+git fetch origin
+
+
+Pull the new commits into your local main
+
+git pull origin main

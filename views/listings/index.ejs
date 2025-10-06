@@ -1,92 +1,110 @@
 <% layout("layouts/boilerplate")%>
-
+    <!-- <h3>All Listings</h3> -->
+    <!-- <form method="GET" action="/listings/new">
+        <button>Create New Listing</button>
+    </form> -->
 <style>
-  #controls-container {
+  #filters-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Push filters left, button right */
     align-items: center;
     flex-wrap: wrap;
-    margin-bottom: 2rem;
+    margin: 2rem 0;
   }
 
   #filters {
     display: flex;
     flex-wrap: wrap;
-    gap: 2.5rem; /* Increased space between icons */
+    gap: 2rem;
+    justify-content: flex-start;
   }
+
   .filter {
     text-align: center;
-    opacity: 0.6;
-    transition: opacity 0.2s ease-in-out;
+    opacity: 0.7;
+    cursor: pointer;
+    transition: all 0.2s ease;
   }
+
   .filter:hover {
     opacity: 1;
-    cursor: pointer;
+    transform: scale(1.05);
   }
+
+  /* 🔹 Neutral color for filter icons */
   .filter i {
-    font-size: 1.5rem; /* Made icons bigger */
+    font-size: 1.4rem;
+    color: #555; /* soft dark gray */
+    margin-bottom: 0.4rem;
   }
+
+  /* 🔹 Text below icon */
   .filter p {
-    font-size: 0.8rem;
-    margin-top: 0.25rem;
-    margin-bottom: 0;
+    margin: 0;
+    font-size: 0.9rem;
+    color: #333;
   }
+
+  /* ❤️ Show Map button (red) */
   .map-view-btn {
     background-color: #fe424d;
-    color: white;
+    color: white !important;
+    border: none;
     padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(254, 66, 77, 0.4);
+    transition: all 0.3s ease;
     text-decoration: none;
-    font-weight: 500;
-    transition: background-color 0.2s;
+    display: inline-flex;
+    align-items: center;
   }
+
+  .map-view-btn i {
+    margin-right: 0.5rem;
+  }
+
   .map-view-btn:hover {
-    background-color: #e03841;
+    background-color: #d8343f;
+    transform: scale(1.05);
+    box-shadow: 0 6px 14px rgba(254, 66, 77, 0.5);
   }
 </style>
 
-<div id="controls-container" class="mt-4">
+<div id="filters-container">
   <div id="filters">
     <div class="filter">
       <div><i class="fa-solid fa-building"></i></div>
       <p>Property Type</p>
     </div>
-
     <div class="filter">
       <div><i class="fa-solid fa-indian-rupee-sign"></i></div>
       <p>Budget</p>
     </div>
-
     <div class="filter">
       <div><i class="fa-solid fa-location-dot"></i></div>
       <p>Location</p>
     </div>
-
     <div class="filter">
       <div><i class="fa-solid fa-user-friends"></i></div>
       <p>Roommates</p>
     </div>
-
     <div class="filter">
       <div><i class="fa-solid fa-shield-halved"></i></div>
       <p>Verified</p>
     </div>
-
     <div class="filter">
       <div><i class="fa-solid fa-city"></i></div>
       <p>Near Metro</p>
     </div>
-
     <div class="filter">
       <div><i class="fa-solid fa-utensils"></i></div>
       <p>Food Included</p>
     </div>
-
     <div class="filter">
       <div><i class="fa-solid fa-dog"></i></div>
       <p>Pet Friendly</p>
     </div>
-
     <div class="filter">
       <div><i class="fa-solid fa-car"></i></div>
       <p>Parking</p>
@@ -94,29 +112,25 @@
   </div>
 
   <a href="/listings/map" class="map-view-btn">
-    <i class="fa-regular fa-map me-2"></i>Show Map
+    <i class="fa-regular fa-map me-2"></i> Show Map
   </a>
 </div>
 
+
+
 <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+
   <% for(let listing of allListings){ %>
-  <a href="/listings/<%= listing._id %>" class="listing-link">
+    <a href="/listings/<%= listing._id %>" class="listing-link">
     <div class="card col listing-card">
-      <img
-        src="<%= listing.image.url %>"
-        class="card-img-top"
-        alt="listing_image"
-        style="height: 20rem"
-      />
+      <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem">
       <div class="card-img-overlay"></div>
       <div class="card-body">
-        <p class="card-text">
-          <b><%= listing.title %></b><br />
-          &#8377; <%= listing.price.toLocaleString("en-IN")%> / month
-        </p>
+        <p class="card-text"><b><%= listing.title %></b><br>
+        &#8377; <%= listing.price.toLocaleString("en-IN")%> / month
+    </p>
       </div>
-    </div></a
-  >
+    </div></a>
   <% } %>
-</div>
 
+</div>

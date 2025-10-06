@@ -8,6 +8,9 @@ const multer=require('multer');
 const { storage } = require('../cloudConfig.js');
 const upload = multer({ storage });
 
+// Map Route
+router.get("/map", wrapAsync(listingController.showMap));
+
 //Index Route + Create Route
 router
 .route("/")

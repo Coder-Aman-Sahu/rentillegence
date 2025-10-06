@@ -1,104 +1,122 @@
 <% layout("layouts/boilerplate")%>
-    <!-- <h3>All Listings</h3> -->
-    <!-- <form method="GET" action="/listings/new">
-        <button>Create New Listing</button>
-    </form> -->
-  <style>
-    #filters {
-      display: flex;
-      flex-wrap:wrap;
-    }
-    .filter{
-      text-align:center;
-      margin-right:2rem;
-      margin-top:2rem;
-      opacity:0.7;
-    }
-    .filter:hover{
-      opacity:1;
-      cursor:pointer;
-    }
-  </style>
-<div id="filters">
-  <div class="filter">
-  <div><i class="fa-solid fa-building"></i></div>
-  <p>Property Type</p>
+
+<style>
+  #controls-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  #filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem; /* Increased space between icons */
+  }
+  .filter {
+    text-align: center;
+    opacity: 0.6;
+    transition: opacity 0.2s ease-in-out;
+  }
+  .filter:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+  .filter i {
+    font-size: 1.5rem; /* Made icons bigger */
+  }
+  .filter p {
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0;
+  }
+  .map-view-btn {
+    background-color: #fe424d;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s;
+  }
+  .map-view-btn:hover {
+    background-color: #e03841;
+  }
+</style>
+
+<div id="controls-container" class="mt-4">
+  <div id="filters">
+    <div class="filter">
+      <div><i class="fa-solid fa-building"></i></div>
+      <p>Property Type</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-indian-rupee-sign"></i></div>
+      <p>Budget</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-location-dot"></i></div>
+      <p>Location</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-user-friends"></i></div>
+      <p>Roommates</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-shield-halved"></i></div>
+      <p>Verified</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-city"></i></div>
+      <p>Near Metro</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-utensils"></i></div>
+      <p>Food Included</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-dog"></i></div>
+      <p>Pet Friendly</p>
+    </div>
+
+    <div class="filter">
+      <div><i class="fa-solid fa-car"></i></div>
+      <p>Parking</p>
+    </div>
+  </div>
+
+  <a href="/listings/map" class="map-view-btn">
+    <i class="fa-regular fa-map me-2"></i>Show Map
+  </a>
 </div>
 
-<div class="filter">
-  <div><i class="fa-solid fa-indian-rupee-sign"></i></div>
-  <p>Budget</p>
-</div>
-
-<div class="filter">
-  <div><i class="fa-solid fa-location-dot"></i></div>
-  <p>Location</p>
-</div>
-
-<div class="filter">
-  <div><i class="fa-solid fa-user-friends"></i></div>
-  <p>Roommates</p>
-</div>
-
-<div class="filter">
-  <div><i class="fa-solid fa-shield-halved"></i></div>
-  <p>Verified</p>
-</div>
-
-
-<div class="filter">
-  <div><i class="fa-solid fa-city"></i></div>
-  <p>Near Metro</p>
-</div>
-
-<div class="filter">
-  <div><i class="fa-solid fa-utensils"></i></div>
-  <p>Food Included</p>
-</div>
-
-<div class="filter">
-  <div><i class="fa-solid fa-dog"></i></div>
-  <p>Pet Friendly</p>
-</div>
-
-<div class="filter">
-  <div><i class="fa-solid fa-car"></i></div>
-  <p>Parking</p>
-</div>
-
-  <!-- <div class="tax-toggle">
-    <div class="form-check-reverse form-switch">
-      <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-      <label class="form-check-label" for="flexSwitchCheckDefault">Display Tax</label>
-    </div> -->
-</div>
-
-<!-- Show search results info -->
-<!-- <% if (typeof searchQuery !== 'undefined' && searchQuery) { %>
-  <h5 class="mt-3">
-    Showing results for "<%= searchQuery %>" 
-    (<%= allListings.length %> found)
-  </h5>
-<% } %> -->
 <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
-
   <% for(let listing of allListings){ %>
-    <a href="/listings/<%= listing._id %>" class="listing-link">
+  <a href="/listings/<%= listing._id %>" class="listing-link">
     <div class="card col listing-card">
-      <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem">
+      <img
+        src="<%= listing.image.url %>"
+        class="card-img-top"
+        alt="listing_image"
+        style="height: 20rem"
+      />
       <div class="card-img-overlay"></div>
       <div class="card-body">
-        <p class="card-text"><b><%= listing.title %></b><br>
-        &#8377; <%= listing.price.toLocaleString("en-IN")%> / month
-    </p>
+        <p class="card-text">
+          <b><%= listing.title %></b><br />
+          &#8377; <%= listing.price.toLocaleString("en-IN")%> / month
+        </p>
       </div>
-    </div></a>
+    </div></a
+  >
   <% } %>
-
 </div>
 
-<!-- 
-<script>
-  let taxSwitch = document.getElementById('flexSwitchCheckDefault');
-  taxSwitch.addEventListener("click",{})
-</script> -->

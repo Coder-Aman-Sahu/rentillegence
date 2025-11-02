@@ -1,0 +1,79 @@
+<% layout("layouts/boilerplate") -%>
+
+<style>
+  .payment-card {
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  .payment-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  .loader {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #fff;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+  @keyframes rotation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+</style>
+
+<div class="row mt-5">
+  <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
+    <div class="card payment-card">
+      <div class="card-header payment-header py-3">
+        <h4 class="mb-0 text-center">Payment Simulation</h4>
+      </div>
+      <div class="card-body p-4">
+        <p class="lead">You are booking <b><%= booking.listing.title %></b>.</p>
+        <ul class="list-group list-group-flush mb-3">
+          <li class="list-group-item d-flex justify-content-between px-0">
+            <span>Security Deposit (Advance)</span>
+            <strong>₹<%= booking.advanceAmount.toLocaleString("en-IN") %></strong>
+          </li>
+          <li class="list-group-item d-flex justify-content-between px-0">
+            <span>Platform Commission (2.5%)</span>
+            <strong>₹<%= booking.commissionAmount.toLocaleString("en-IN") %></strong>
+          </li>
+          <li class="list-group-item d-flex justify-content-between px-0 bg-light mt-2">
+            <span class="h5">Total Payable</span>
+            <strong class="h5 text-danger">₹<%= booking.totalAmount.toLocaleString("en-IN") %></strong>
+          </li>
+        </ul>
+        
+        <p class="text-muted small">This is a project simulation. No real payment will be processed. Clicking "Confirm" will simulate a successful transaction and confirm your booking.</p>
+        
+        <form action="/booking/<%= booking._id %>/payment/simulate" method="POST" id="payment-form">
+          <button type.submit" class="btn btn-success btn-lg w-100" id="pay-btn">
+            <span id="btn-loader" class="loader" style="display: none;"></span>
+            <span id="btn-text">Confirm & Pay ₹<%= booking.totalAmount.toLocaleString("en-IN") %></span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Script to show a fake loader on submit
+  document.getElementById('payment-form').addEventListener('submit', function() {
+    const btn = document.getElementById('pay-btn');
+    const btnText = document.getElementById('btn-text');
+    const btnLoader = document.getElementById('btn-loader');
+    
+    btn.disabled = true;
+    btnText.textContent = "Processing...";
+    btnLoader.style.display = 'inline-block';
+  });
+</script>

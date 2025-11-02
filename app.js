@@ -14,7 +14,9 @@ const ExpressError = require("./utils/ExpressError.js");
 const session=require("express-session");
 const MongoStore=require("connect-mongo");
 const flash=require("connect-flash");
+
 const passport=require("passport");
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const LocalStrategy=require("passport-local");
 const User=require("./models/user.js");
 
@@ -22,6 +24,8 @@ const listingRouter=require("./routes/listing.js");
 const reviewRouter=require("./routes/review.js");
 // const { bulkSave } = require("./models/review.js");
 const userRouter = require("./routes/user.js");
+const searchRouter = require("./routes/search.js");
+const bookingRouter = require("./routes/booking.js");
 
 const dbUrl=process.env.ATLASDB_URL;
 
@@ -82,6 +86,58 @@ app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: "/auth/google/callback"
+  },
+  async (accessToken, refreshToken, profile, done) => {
+    try {
+      // 1. Check if user already exists with this Google ID
+      let user = await User.findOne({ googleId: profile.id });
+      if (user) {
+        return done(null, user);
+      }
+
+      // 2. Check if user exists with the same email
+      // (in case they signed up locally first)
+      user = await User.findOne({ email: profile.emails[0].value });
+      if (user) {
+        // Link the Google ID to their local account
+        user.googleId = profile.id;
+        await user.save();
+        return done(null, user);
+      }
+
+      // 3. This is a new user
+      const newUser = new User({
+        googleId: profile.id,
+        email: profile.emails[0].value,
+        username: profile.displayName // Use Google display name as username
+      });
+
+      // Since we are not using .register(), we can just save.
+      // This user won't have a local password.
+      let savedUser;
+      try {
+        savedUser = await newUser.save();
+      } catch (e) {
+        // Handle rare case where username (displayName) is not unique
+        if (e.code === 11000) { // Duplicate key error
+          newUser.username = profile.displayName + Math.floor(Math.random() * 1000);
+          savedUser = await newUser.save();
+        } else {
+          throw e;
+        }
+      }
+      return done(null, savedUser);
+      
+    } catch (err) {
+      return done(err, null);
+    }
+  }
+));
+
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -101,12 +157,16 @@ app.get("/demouser",async (req,res)=>{
   res.send(registeredUser);
 });
 
+app.get("/", (req, res) => {
+  // Pass a variable to tell the navbar to be transparent
+  res.render("home.ejs", { page_name: "home" });
+});
 
 app.use("/listings",listingRouter);
 app.use("/listings/:id/reviews",reviewRouter);
 app.use("/",userRouter);
-
-
+app.use("/api/search", searchRouter);
+app.use("/", bookingRouter); 
 
 app.use((req, res, next) => {
     next(new ExpressError(404, "Page Not Found!"));

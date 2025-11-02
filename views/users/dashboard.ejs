@@ -1,0 +1,138 @@
+<% layout("layouts/boilerplate") -%>
+
+<style>
+  /* Custom styles for the dashboard */
+  .booking-card {
+    border-radius: 10px; 
+    border: 1px solid #ddd;
+    transition: box-shadow 0.2s ease;
+  }
+  .booking-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .booking-status {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+  .booking-actions .btn {
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+  }
+</style>
+
+<div class="row mt-3">
+  <div class="col-10 offset-1">
+    <h3>Welcome to your Dashboard, <%= currUser.username %></h3>
+    
+    <!-- My Rental Requests (User as Renter) -->
+    <h4 class="mt-4">My Rental Requests</h4>
+    <div class="list-group">
+      <% if (rentals.length === 0) { %>
+        <p>You have not made any rental requests yet. <a href="/listings">Explore listings</a>.</p>
+      <% } %>
+      
+      <% for(let booking of rentals) { %>
+        <div class="list-group-item list-group-item-action mb-3 p-3 booking-card">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1"><%= booking.listing.title %></h5>
+            <small class="text-muted">Requested on <%= new Date(booking.createdAt).toLocaleDateString("en-IN") %></small>
+          </div>
+          <p class="mb-1">Owner: <%= booking.owner.username %></p>
+          <p class="mb-2">Total Amount: <b>₹<%= booking.totalAmount.toLocaleString("en-IN") %></b></p>
+          
+          <!-- Renter's Actions based on Status -->
+          <div class="mt-2 booking-actions">
+            <% if (booking.status === 'pending_approval') { %>
+              <span class="badge bg-warning text-dark booking-status">Awaiting Owner Approval</span>
+            <% } else if (booking.status === 'awaiting_signatures') { %>
+              <a href="/booking/<%= booking._id %>/agreement" class="btn btn-outline-primary" target="_blank">
+                <i class="fa-solid fa-file-contract me-1"></i> View Agreement
+              </a>
+              <% if (!booking.renterSigned) { %>
+                <form action="/booking/<%= booking._id %>/sign" method="POST" class="d-inline ms-2">
+                  <button class="btn btn-success">
+                    <i class="fa-solid fa-pen-to-square me-1"></i> Click to Sign Agreement
+                  </button>
+                </form>
+              <% } else { %>
+                <span class="badge bg-light text-dark ms-2"><i class="fa-solid fa-check"></i> You have signed. Waiting for owner.</span>
+              <% } %>
+            <% } else if (booking.status === 'awaiting_payment') { %>
+              <a href="/booking/<%= booking._id %>/agreement" class="btn btn-outline-primary" target="_blank">
+                <i class="fa-solid fa-file-contract me-1"></i> View Agreement
+              </a>
+              <a href="/booking/<%= booking._id %>/pay" class="btn btn-success ms-2">
+                <i class="fa-solid fa-credit-card me-1"></i> Proceed to Pay ₹<%= booking.totalAmount.toLocaleString("en-IN") %>
+              </a>
+            <% } else if (booking.status === 'confirmed') { %>
+              <a href="/booking/<%= booking._id %>/agreement" class="btn btn-outline-primary" target="_blank">
+                <i class="fa-solid fa-file-contract me-1"></i> View Final Agreement
+              </a>
+              <span class="badge bg-success ms-2 booking-status">Booking Confirmed!</span>
+            <% } else if (booking.status === 'rejected') { %>
+              <span class="badge bg-danger booking-status">Booking Rejected by Owner</span>
+            <% } %>
+          </div>
+        </div>
+      <% } %>
+    </div>
+
+    <!-- Received Booking Requests (User as Owner) -->
+    <h4 class="mt-5">Received Booking Requests</h4>
+    <div class="list-group">
+      <% if (receivedBookings.length === 0) { %>
+        <p>You have not received any booking requests for your listings.</p>
+      <% } %>
+      
+      <% for(let booking of receivedBookings) { %>
+        <div class="list-group-item list-group-item-action mb-3 p-3 booking-card">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1"><%= booking.listing.title %></h5>
+            <small class="text-muted booking-status"><%= booking.status.replace(/_/g, " ") %></small>
+          </div>
+          <p class="mb-2">Renter: <%= booking.renter.username %></p>
+          
+          <!-- Owner's Actions based on Status -->
+          <div class="mt-2 booking-actions">
+            <% if (booking.status === 'pending_approval') { %>
+              <!-- ⬇️ UPDATED BUTTONS ⬇️ -->
+              <div class="d-flex gap-2">
+                <form action="/booking/<%= booking._id %>/approve" method="POST" class="d-inline">
+                  <button class="btn btn-success">
+                    <i class="fa-solid fa-check me-1"></i> Approve
+                  </button>
+                </form>
+                <form action="/booking/<%= booking._id %>/reject" method="POST" class="d-inline">
+                  <button class="btn btn-danger">
+                    <i class="fa-solid fa-times me-1"></i> Reject
+                  </button>
+                </form>
+              </div>
+            <% } else if (booking.status === 'awaiting_signatures') { %>
+              <a href="/booking/<%= booking._id %>/agreement" class="btn btn-outline-primary" target="_blank">
+                <i class="fa-solid fa-file-contract me-1"></i> View Agreement
+              </a>
+              <% if (!booking.ownerSigned) { %>
+                <form action="/booking/<%= booking._id %>/sign" method="POST" class="d-inline ms-2">
+                  <button class="btn btn-success">
+                    <i class="fa-solid fa-pen-to-square me-1"></i> Click to Sign Agreement
+                  </button>
+                </form>
+              <% } else { %>
+                <span class="badge bg-light text-dark ms-2"><i class="fa-solid fa-check"></i> You have signed. Waiting for renter.</span>
+              <% } %>
+            <% } else if (booking.status === 'rejected') { %>
+              <span class="badge bg-danger booking-status">You rejected this booking.</span>
+            <% } else { %>
+              <a href="/booking/<%= booking._id %>/agreement" class="btn btn-outline-primary" target="_blank">
+                <i class="fa-solid fa-file-contract me-1"></i> View Agreement
+              </a>
+            <% } %>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>
+

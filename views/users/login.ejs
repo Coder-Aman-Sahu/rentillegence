@@ -1,17 +1,63 @@
 <% layout("layouts/boilerplate") -%>
+<style>
+  .google-btn {
+    background-color: #4285F4;
+    color: white;
+    border: none;
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 5px;
+    font-weight: 500;
+  }
+  .google-btn:hover {
+    background-color: #357ae8;
+    color: white;
+  }
+  .divider-text {
+    position: relative;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  .divider-text span {
+    padding: 7px;
+    font-size: 12px;
+    position: relative;
+    z-index: 2;
+    background-color: #fff;
+    color: #6c757d;
+  }
+  .divider-text:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    top: 55%;
+    left: 0;
+    z-index: 1;
+  }
+</style>
+
 <div class="row mt-3">
     <h1 class="col-6 offset-3">Login</h1>
     <div class="col-6 offset-3">
         <form action="/login" method="POST" class="needs-validation" novalidate>
              <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
-    <input name="username" id="username" placeholder="enter username" type="text" class="form-control" required/>
+                <label for="username" class="form-label">Username</label>
+                <input name="username" id="username" placeholder="enter username" type="text" class="form-control" required/>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input name="password" id="password" placeholder="enter password" type="password" class="form-control" required/>
+            </div>   
+            <button class="btn btn-success">Log In</button>
+        </form>
         
-    <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-    <input name="password" id="password" placeholder="enter password" type="password" class="form-control" required/></div>    
-    <button class="btn btn-success">Log In</button>
-</form>
-    </div>
-    
-</div>  
+        <div class="divider-text">
+          <span>OR</span>
+        </div>
+        <a href="/auth/google" class="btn google-btn w-100">
+          <i class="fa-brands fa-google me-2"></i> Sign in with Google
+        </a>
+        </div>
+</div>

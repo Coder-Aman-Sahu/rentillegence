@@ -6,7 +6,8 @@ const userSchema=new Schema({
     email:{
         type:String,
         required:true
-    }
+    },
+    googleId: String
 });
 
 userSchema.plugin(passportLocalMongoose); //adds username and password fields along with some methods to userSchema

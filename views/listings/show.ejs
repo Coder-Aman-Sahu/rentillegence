@@ -11,99 +11,259 @@
     background-color: #e0a800;
     border-color: #d39e00;
   }
+
+  
+  /* This is the new marker style */
+.icon-only-marker {
+  font-size: 1.7rem;
+  color: #28a745;
+  -webkit-text-stroke: 1px #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+.icon-only-marker:hover {
+  transform: scale(1.1);
+  color: #1e7e34;
+}
+
+  /* Custom popup styling */
+  .mapboxgl-popup-content {
+    font-family: "Plus Jakarta Sans", sans-serif !important;
+    padding: 10px 15px !important;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+    max-width: 200px !important;
+    text-align: center !important;
+  }
+  .mapboxgl-popup-content h6 {
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: #343a40; /* Match the icon color */
+  }
+  .mapboxgl-popup-content p {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    color: #222;
+  }
+  .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+    border-top-color: #fff !important;
+  }
+
+
 </style>
 
 <script>
+  // Pass data from Node.js to our script
   const mapToken = "<%= process.env.MAP_TOKEN %>";
   const listing = <%- JSON.stringify(listing) %>;
 </script>
+
 <div class="row mt-3">
     <div class="col-8 offset-3">
-    <h3><%= listing.title %></h3>
+      <h3><%= listing.title %></h3>
     </div>
+    
     <div class="card col-6 offset-3 show-card listing-card">
-  <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing_image">
-  <div class="card-body">
-    <p class="card-text"><i>Owned by <%= listing.owner.username %></i></p>
-    <p class="card-text"><%= listing.description %></p>
-    <p class="card-text">
-        &#8377; <%= listing.price.toLocaleString("en-IN") %>
-    </p>
-    <p class="card-text"><%= listing.location %></p>
-    <p class="card-text"><%= listing.country %></p>
-    <% if(currUser && !currUser._id.equals(listing.owner._id)) { %>
-      <a href="#" class="btn rent-btn mt-3 fw-bold"><i class="fa-solid fa-cart-shopping me-2"></i>Rent Now</a>
+      <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing_image">
+      <div class="card-body">
+        <p class="card-text"><i>Owned by <%= listing.owner.username %></i></p>
+        <p class="card-text"><%= listing.description %></p>
+        <p class="card-text">
+            &#8377; <%= listing.price.toLocaleString("en-IN") %>
+        </p>
+        <p class="card-text"><%= listing.location %></p>
+        <p class="card-text"><%= listing.country %></p>
+        <% if(currUser && !currUser._id.equals(listing.owner._id)) { %>
+      <form action="/listings/<%= listing._id %>/book" method="POST">
+        <button class="btn rent-btn mt-3 fw-bold">
+          <i class="fa-solid fa-cart-shopping me-2"></i>Rent Now
+        </button>
+      </form>
     <% } %>
-</div>
-</div>
+      </div>
+    </div>
     <br/>
+    
     <% if(currUser && currUser._id.equals(listing.owner._id)){ %>
-    <div class="btns">
-    <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark col-1 offset-3 edit-btn">Edit</a>
-    <form method="POST" action="/listings/<%=listing._id%>?_method=DELETE">
-        <button class="btn btn-dark offset-4">Delete</button>
-    </form>
+    <div class="btns col-8 offset-3 mb-3">
+      <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark edit-btn">Edit</a>
+      <form method="POST" action="/listings/<%=listing._id%>?_method=DELETE" class="ms-3">
+          <button class="btn btn-dark">Delete</button>
+      </form>
     </div>
     <% } %>
 
-    
     <div class="col-8 offset-3 mb-3">
       <% if(currUser) {%>
         <hr/>
-      <h4>Leave a Review</h4>
-      <form action="/listings/<%= listing.id %>/reviews" method="POST" novalidate class="needs-validation">
-       
-        <div class="mb-3 mt-3">
-           <label for="rating" class="form-label">Rating</label>
-        <fieldset class="starability-slot">
+        <h4>Leave a Review</h4>
+        <form action="/listings/<%= listing.id %>/reviews" method="POST" novalidate class="needs-validation">
          
-          <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
-          <input type="radio" id="first-rate1" name="review[rating]" value="1" />
-          <label for="first-rate1" title="Terrible">1 star</label>
-          <input type="radio" id="first-rate2" name="review[rating]" value="2" />
-          <label for="first-rate2" title="Not good">2 stars</label>
-          <input type="radio" id="first-rate3" name="review[rating]" value="3" />
-          <label for="first-rate3" title="Average">3 stars</label>
-          <input type="radio" id="first-rate4" name="review[rating]" value="4" />
-          <label for="first-rate4" title="Very good">4 stars</label>
-          <input type="radio" id="first-rate5" name="review[rating]" value="5" />
-          <label for="first-rate5" title="Amazing">5 stars</label>
-        </fieldset>
-</div>
-        <div class="mb-3 mt-3"> 
-          <label for="comment" class="form-label">Comment</label>
-          <textarea id="comment" name="review[comment]" cols="30" rows="5"  placeholder="Write your review here..." class="form-control" required></textarea>
-          <div class="invalid-feedback">Please add some comments for review</div>
-        </div>
-        <button class="btn btn-outline-dark">Submit</button>
-      </form>
+          <div class="mb-3 mt-3">
+             <label for="rating" class="form-label">Rating</label>
+            <fieldset class="starability-slot">
+              <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+              <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+              <label for="first-rate1" title="Terrible">1 star</label>
+              <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+              <label for="first-rate2" title="Not good">2 stars</label>
+              <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+              <label for="first-rate3" title="Average">3 stars</label>
+              <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+              <label for="first-rate4" title="Very good">4 stars</label>
+              <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+              <label for="first-rate5" title="Amazing">5 stars</label>
+            </fieldset>
+          </div>
+          <div class="mb-3 mt-3"> 
+            <label for="comment" class="form-label">Comment</label>
+            <textarea id="comment" name="review[comment]" cols="30" rows="5"  placeholder="Write your review here..." class="form-control" required></textarea>
+            <div class="invalid-feedback">Please add some comments for review</div>
+          </div>
+          <button class="btn btn-outline-dark">Submit</button>
+        </form>
       <%}%>
-  
-      <% if(listing.reviews.length>0) { %>
-      <div class="row">
-        <p><b>All Reviews</b></p>
-<% for(review of listing.reviews) { %>
-    <div class="card col-5 ms-3 mb-3">
-      <div class="card-body">
-        <h5 class="card-title">@<%= review.author.username %></h5>
-            <p class="starability-result card-text" data-rating="<%=review.rating%>">
-  </p>
-        <p class="card-text"><%=review.comment%></p>
-    
-      </div>
-      <form class="mb-3" method="POST" action="/listings/<%= listing.id %>/reviews/<%= review._id %>?_method=DELETE">
-      <button class="btn btn-sm btn-dark">Delete</button>
-      </form>
     </div>
-  <% } %>
-  </div>
-  <% } %>
-    </div>
+
     <div class="col-8 offset-3 mb-3">
-    <h3>Where you'll be</h3>
-    <div id="map"></div>
-</div>
+      <% if(listing.reviews.length > 0) { %>
+        <hr>
+        <p><b>All Reviews</b></p>
+        <div class="row">
+          <% for(review of listing.reviews) { %>
+          <div class="card col-5 ms-3 mb-3">
+            <div class="card-body">
+              <h5 class="card-title">@<%= review.author.username %></h5>
+              <p class="starability-result card-text" data-rating="<%=review.rating%>"></p>
+              <p class="card-text"><%=review.comment%></p>
+            </div>
+            <form class="mb-3" method="POST" action="/listings/<%= listing.id %>/reviews/<%= review._id %>?_method=DELETE">
+              <button class="btn btn-sm btn-dark">Delete</button>
+            </form>
+          </div>
+          <% } %>
+        </div>
+      <% } %>
+    </div>
+    
+    <div class="col-8 offset-3 mb-3">
+      <hr>
+      <div class="row">
+        
+        <div class="col-md-7">
+          <h3>Where you'll be</h3>
+          <div id="map"></div>
+        </div>
+    
+        <div class="col-md-5">
+          <h3 class="mt-3 mt-md-0">What's Nearby</h3>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex align-items-center ps-0">
+              <i class="fa-solid fa-train-subway me-3"></i>
+              <span id="nearby-metro">Loading...</span>
+            </li>
+            <li class="list-group-item d-flex align-items-center ps-0">
+              <i class="fa-solid fa-hospital me-3"></i>
+              <span id="nearby-hospital">Loading...</span>
+            </li>
+            <li class="list-group-item d-flex align-items-center ps-0">
+              <i class="fa-solid fa-school me-3"></i>
+              <span id="nearby-school">Loading...</span>
+            </li>
+             <li class="list-group-item d-flex align-items-center ps-0">
+              <i class="fa-solid fa-train me-3"></i>
+              <span id="nearby-railway">Loading...</span>
+            </li>
+            <li class="list-group-item d-flex align-items-center ps-0">
+              <i class="fa-solid fa-plane-departure me-3"></i>
+              <span id="nearby-airport">Loading...</span>
+            </li>
+          </ul>
+        </div>
+        
+      </div>
+    </div>
+
 </div>
 
-<script src="/js/map.js"></script>
+<script>
+  // --- 1. MAP INITIALIZATION ---
+  mapboxgl.accessToken = mapToken; // Uses mapToken from top
+  const map = new mapboxgl.Map({
+      container: 'map', // container ID
+      style: "mapbox://styles/mapbox/streets-v12", // style URL
+      center: listing.geometry.coordinates, // Uses listing from top
+      zoom: 9, // starting zoom
+  });
 
+  // Add zoom controls
+  map.addControl(new mapboxgl.NavigationControl());
+
+  // Add the main listing marker (red)
+  const listingMarker = new mapboxgl.Marker({color:"red"})
+      .setLngLat(listing.geometry.coordinates)
+      .setPopup(
+          new mapboxgl.Popup({ offset: 25 })
+              .setHTML(`<h5>${listing.title}</h5><p>This is the listing location</p>`)
+      )
+      .addTo(map);
+
+
+  // --- 2. NEARBY AMENITIES LOGIC ---
+  
+  async function fetchNearest(category, coords) {
+    const [longitude, latitude] = coords;
+    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(category)}.json?proximity=${longitude},${latitude}&access_token=${mapToken}&limit=1`;
+    
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error('Mapbox request failed');
+      const data = await response.json();
+      
+      if (data.features && data.features.length > 0) {
+        return data.features[0]; 
+      }
+      return null;
+    } catch (err) {
+      console.error(err);
+      return null; 
+    }
+  }
+
+  async function updateAmenity(categoryId, categoryName, elementId, iconClass) {
+    const el = document.getElementById(elementId);
+    const feature = await fetchNearest(categoryId, listing.geometry.coordinates);
+
+    if (!feature) {
+      el.innerHTML = `<b>Closest ${categoryName}:</b> No nearby location found.`;
+      return; 
+    }
+
+    // 1. Update the list text
+    const placeName = feature.place_name;
+    const nameOnly = placeName.split(',')[0];
+    el.innerHTML = `<b>Closest ${categoryName}:</b> ${nameOnly}`;
+
+    const markerEl = document.createElement('div');
+    markerEl.className = 'icon-only-marker'; // Use our new CSS class
+    markerEl.innerHTML = `<i class="fa-solid ${iconClass}"></i>`; // Add the icon
+
+    new mapboxgl.Marker(markerEl)
+        .setLngLat(feature.geometry.coordinates)
+        .setPopup(
+            new mapboxgl.Popup({ offset: 30 }) // Offset for the icon
+                .setHTML(`<h6>${categoryName}</h6><p>${nameOnly}</p>`)
+        )
+        .addTo(map); 
+  }
+
+  // Pass the icon class for each category
+  document.addEventListener('DOMContentLoaded', () => {
+    updateAmenity('metro station', 'Metro', 'nearby-metro', 'fa-train-subway');
+    updateAmenity('hospital', 'Hospital', 'nearby-hospital', 'fa-hospital');
+    updateAmenity('school', 'School', 'nearby-school', 'fa-school');
+    updateAmenity('railway station', 'Railway Station', 'nearby-railway', 'fa-train');
+    updateAmenity('airport', 'Airport', 'nearby-airport', 'fa-plane-departure');
+  });
+</script>

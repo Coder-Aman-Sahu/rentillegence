@@ -1,51 +1,50 @@
 <% layout("layouts/boilerplate")%>
-    <!-- <h3>All Listings</h3> -->
-    <!-- <form method="GET" action="/listings/new">
-        <button>Create New Listing</button>
-    </form> -->
+
 <style>
-  #filters-container {
+  /* Container for AI search and Map Button */
+  .top-controls-container {
     display: flex;
-    justify-content: space-between; /* Push filters left, button right */
-    align-items: center;
-    flex-wrap: wrap;
-    margin: 2rem 0;
+    justify-content: space-between; /* Moves children to opposite ends */
+    align-items: center; /* Vertically centers the form and the button */
+    padding: 0.5rem 0 2rem 0; /* Adjusted padding */
+    flex-wrap: wrap; /* Allows stacking on small screens */
   }
 
-  #filters {
+  /* AI Search Bar styles */
+  .search-form {
     display: flex;
-    flex-wrap: wrap;
-    gap: 2rem; /* Increased gap for more space */
-    justify-content: flex-start;
+    flex-grow: 1; /* Allows search form to take available space */
+    max-width: 700px; /* Prevents it from getting too wide */
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 50px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    overflow: hidden;
   }
-
-  .filter {
-    text-align: center;
-    opacity: 0.7;
+  .search-input {
+    flex-grow: 1;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    outline: none;
+  }
+  .search-button {
+    background-color: #fe424d;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: background-color 0.2s;
+  }
+  .search-button:hover { background-color: #d8343f; }
+  #loader { 
+    display: none; 
+    margin: 1.5rem auto; 
+    text-align: center; 
   }
 
-  .filter:hover {
-    opacity: 1;
-    transform: scale(1.05);
-  }
-
-  /* 🔹 Neutral color for filter icons */
-  .filter i {
-    font-size: 1.25rem; /* Slightly reduced icon size for consistency */
-    color: #555; /* soft dark gray */
-    margin-bottom: 0.4rem;
-  }
-
-  /* 🔹 Text below icon */
-  .filter p {
-    margin: 0;
-    font-size: 0.8rem; /* Adjusted font size */
-    color: #333;
-  }
-
-  /* ❤️ Show Map button (red) */
+  /* Map Button styles */
   .map-view-btn {
     background-color: #fe424d;
     color: white !important;
@@ -58,67 +57,67 @@
     text-decoration: none;
     display: inline-flex;
     align-items: center;
+    white-space: nowrap; /* Prevents text from wrapping */
+    margin-left: 1rem; /* Adds space from search bar */
   }
-
-  .map-view-btn i {
-    margin-right: 0.5rem;
-  }
-
   .map-view-btn:hover {
     background-color: #d8343f;
     transform: scale(1.05);
     box-shadow: 0 6px 14px rgba(254, 66, 77, 0.5);
   }
+
+  /* Helper text style */
+  .ai-search-prompt {
+    text-align: center;
+    padding-top: 2rem; /* Add space above the text */
+    margin-bottom: 0.5rem; /* Space between text and search bar */
+  }
+
+  @media (max-width: 768px) {
+    .top-controls-container {
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+  }
 </style>
 
-<div id="filters-container">
-  <div id="filters">
-    <div class="filter">
-      <div><i class="fa-solid fa-building"></i></div>
-      <p>Property Type</p>
-    </div>
-    <div class="filter">
-      <div><i class="fa-solid fa-indian-rupee-sign"></i></div>
-      <p>Budget</p>
-    </div>
-    <div class="filter">
-      <div><i class="fa-solid fa-location-dot"></i></div>
-      <p>Location</p>
-    </div>
-    <div class="filter">
-      <div><i class="fa-solid fa-user-friends"></i></div>
-      <p>Roommates</p>
-    </div>
-    <div class="filter">
-      <div><i class="fa-solid fa-shield-halved"></i></div>
-      <p>Verified</p>
-    </div>
-    <div class="filter">
-      <div><i class="fa-solid fa-city"></i></div>
-      <p>Near Metro</p>
-    </div>
-    <div class="filter">
-      <div><i class="fa-solid fa-utensils"></i></div>
-      <p>Food Included</p>
-    </div>
-    <div class="filter">
-      <div><i class="fa-solid fa-dog"></i></div>
-      <p>Pet Friendly</p>
-    </div>
-    <div class="filter">
-      <div><i class="fa-solid fa-car"></i></div>
-      <p>Parking</p>
-    </div>
-  </div>
+<p class="text-muted ai-search-prompt">
+  Or use AI search: e.g., "A modern apartment near Hitec City under 30000"
+</p>
 
+<div class="top-controls-container">
+  
+  <form class="search-form" id="conversational-search-form">
+    <input 
+      type="text" 
+      id="search-query-input" 
+      class="search-input" 
+      placeholder="Start typing..."
+    >
+    <button type="submit" class="search-button">
+      <i class="fa-solid fa-wand-magic-sparkles me-2"></i>Search AI
+    </button>
+  </form>
+  
   <a href="/listings/map" class="map-view-btn">
     <i class="fa-regular fa-map me-2"></i> Show Map
   </a>
 </div>
 
+<div class="row">
+    <div class="col-12" id="loader">
+        <div class="spinner-border text-danger" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+</div>
 
 
-<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3" id="listings-grid">
+  <% if(allListings.length === 0) { %>
+    <p class="text-center col-12">No listings found matching your search.</p>
+  <% } %>
 
   <% for(let listing of allListings){ %>
     <a href="/listings/<%= listing._id %>" class="listing-link">
@@ -127,11 +126,69 @@
       <div class="card-img-overlay"></div>
       <div class="card-body">
         <p class="card-text"><b><%= listing.title %></b><br>
-        &#8377; <%= listing.price.toLocaleString("en-IN")%> / month
+          &#8377; <%= listing.price.toLocaleString("en-IN")%> / month
     </p>
       </div>
     </div></a>
   <% } %>
-
 </div>
 
+<script>
+  const searchForm = document.getElementById('conversational-search-form');
+  const searchInput = document.getElementById('search-query-input');
+  const listingsGrid = document.getElementById('listings-grid');
+  const loader = document.getElementById('loader');
+
+  searchForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const query = searchInput.value;
+    if (!query) return;
+
+    showLoading(true);
+    
+    try {
+      const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+      if (!response.ok) throw new Error('Search failed');
+      const listings = await response.json();
+      renderListings(listings);
+    } catch (err) {
+      console.error(err);
+      listingsGrid.innerHTML = `<p class="text-center text-danger col-12">Could not perform search. Please try again.</p>`;
+    } finally {
+      showLoading(false);
+    }
+  });
+
+  function showLoading(isLoading) {
+    loader.style.display = isLoading ? 'block' : 'none';
+    listingsGrid.style.display = isLoading ? 'none' : 'flex';
+  }
+
+  function renderListings(listings) {
+    listingsGrid.innerHTML = ''; // Clear existing listings
+    if (listings.length === 0) {
+      listingsGrid.innerHTML = `<p class="text-center col-12">No listings found matching your search.</p>`;
+      return;
+    }
+    for (let listing of listings) {
+      // Added a check for listing.image to prevent errors
+      const imageUrl = (listing.image && listing.image.url) 
+        ? listing.image.url 
+        : "https://images.unsplash.com/photo-1554995207-c18c203602cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cm9vbXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"; // A fallback image
+
+      const listingCardHtml = `
+        <a href="/listings/${listing._id}" class="listing-link">
+        <div class="card col listing-card">
+          <img src="${imageUrl}" class="card-img-top" alt="listing_image" style="height: 20rem">
+          <div class="card-img-overlay"></div>
+          <div class="card-body">
+            <p class="card-text"><b>${listing.title}</b><br>
+              &#8377; ${listing.price.toLocaleString("en-IN")} / month
+            </p>
+          </div>
+        </div></a>
+      `;
+      listingsGrid.innerHTML += listingCardHtml;
+    }
+  }
+</script>

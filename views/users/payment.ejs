@@ -1,0 +1,82 @@
+<% layout("layouts/boilerplate") -%>
+
+<div class="row mt-3">
+  <div class="col-6 offset-3">
+    <h3>Confirm Your Booking</h3>
+    <p>You are booking <b><%= booking.listing.title %></b>.</p>
+    
+    <div classs="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Payment Details</h5>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Security Deposit: ₹<%= booking.advanceAmount.toLocaleString("en-IN") %></li>
+          <li class="list-group-item">Platform Commission (2.5%): ₹<%= booking.commissionAmount.toLocaleString("en-IN") %></li>
+          <li class="list-group-item"><b>Total Payable: ₹<%= booking.totalAmount.toLocaleString("en-IN") %></b></li>
+        </ul>
+        
+        <!-- This is the "Pay" button that opens Razorpay -->
+        <button id="rzp-button1" class="btn btn-success mt-3">Pay with Razorpay</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- This script comes from Razorpay's documentation -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+  var options = {
+    "key": "<%= key_id %>", // Your Key ID
+    "amount": "<%= order.amount %>", // Amount is in currency subunits (paisa)
+    "currency": "INR",
+    "name": "Rentillegence",
+    "description": "Booking for <%= booking.listing.title.replace("'", "") %>",
+    "image": "https://i.imgur.com/your-logo.png", // TODO: Add your logo URL here
+    "order_id": "<%= order.id %>", // This is the orderId we created
+    
+    // This function gets called when payment is successful
+    "handler": function (response){
+      // We need to submit this data to our server to verify
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = '/booking/payment/verify';
+
+      // Add data to the form
+      const fields = {
+        razorpay_payment_id: response.razorpay_payment_id,
+        razorpay_order_id: response.razorpay_order_id,
+        razorpay_signature: response.razorpay_signature,
+        booking_id: "<%= booking._id %>"
+      };
+
+      for (const key in fields) {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = fields[key];
+        form.appendChild(input);
+      }
+
+      document.body.appendChild(form);
+      form.submit();
+    },
+    "prefill": {
+      "name": "<%= user.username %>",
+      "email": "<%= user.email %>",
+      "contact": "9999999999" // TODO: Add contact to user schema
+    },
+    "theme": {
+      "color": "#fe424d" // Your brand color
+    }
+  };
+  var rzp1 = new Razorpay(options);
+  
+  // Show an error if payment fails
+  rzp1.on('payment.failed', function (response){
+          alert("Payment failed: " + response.error.description);
+  });
+  
+  document.getElementById('rzp-button1').onclick = function(e){
+      rzp1.open();
+      e.preventDefault();
+  }
+</script>

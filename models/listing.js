@@ -35,6 +35,17 @@ const listingSchema = new Schema({
         type: [Number],
         required: true
     }
+  },
+  description_embedding: {
+    type: [Number],
+    index: true // We will replace this with a proper vector index
+  },
+  nearby_amenities: {
+    hospital_dist: Number, // Stores distance in meters
+    railway_dist: Number,
+    airport_dist: Number,
+    metro_dist: Number,   
+    school_dist: Number
   }
 });
 

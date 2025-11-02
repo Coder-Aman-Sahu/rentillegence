@@ -1,351 +1,301 @@
 const sampleListings = [
   {
-    title: "Cozy Beachfront Cottage",
-    description:
-      "Escape to this charming beachfront cottage for a relaxing getaway. Enjoy stunning ocean views and easy access to the beach.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHRyYXZlbHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+    "_id": "68dea4fc21aa9e0dd38cfb50", // Changed
+    "title": "Spacious & Modern 2 BHK in Prime HSR Layout - Near Tech Parks!",
+    "description": " 2 Bedroom, Hall, Kitchen (2 BHK) apartment on the 3rd floor of a well-maintained society.",
+    "image": {
+      "url": "https://res.cloudinary.com/dcol8oofr/image/upload/v1759421691/rentillegence_DEV/xf4je0yicnmdtf2t6j62.jpg",
+      "filename": "rentillegence_DEV/xf4je0yicnmdtf2t6j62"
     },
-    price: 1500,
-    location: "Malibu",
-    country: "United States",
+    "price": 28000,
+    "location": "HSR Layout, Sector 7, Bengaluru, Karnataka",
+    "country": "India",
+    "reviews": [
+      "68dff9faf6a6d5d31db61316", // Changed
+      "68e0a0d7ceba01312c00a17a"  // Changed
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        77.63813,
+        12.912339
+      ]
+    },
+    "owner": "68de90adc0a2aa87fdc5ffad", // Changed
+    "__v": 2
   },
   {
-    title: "Modern Loft in Downtown",
-    description:
-      "Stay in the heart of the city in this stylish loft apartment. Perfect for urban explorers!",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHRyYXZlbHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+    "_id": "68dea63f21aa9e0dd38cfb5b", // Changed
+    "title": "Executive Studio with Dedicated WFH Zone & Terrace Access",
+    "description": "Perfect for the single working professional! This compact Studio Apartment (1 RK) features a cleverly designed workspace with shelves, excellent lighting, and a vibrant accent wall. Fully furnished with a bed, TV unit, wardrobe, and a dedicated high-speed internet line. Located in a secure, well-maintained building with easy access to Cyber Hub and major MNC offices. Ideal for those who value efficiency and style.",
+    "image": {
+      "url": "https://res.cloudinary.com/dcol8oofr/image/upload/v1759422014/rentillegence_DEV/h1uobxhvjle1lktnhvkv.jpg",
+      "filename": "rentillegence_DEV/h1uobxhvjle1lktnhvkv"
     },
-    price: 1200,
-    location: "New York City",
-    country: "United States",
+    "price": 24500,
+    "location": "Sector 54, Golf Course Road, Gurugram (Near Rapid Metro)",
+    "country": "India",
+    "reviews": [
+      "68e0a0b2ceba01312c00a163", // Changed
+      "68e0a27a1f2bf725595ecc7b"  // Changed
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        77.095992,
+        28.459857
+      ]
+    },
+    "owner": "68de90adc0a2aa87fdc5ffad", // Changed
+    "__v": 2
   },
   {
-    title: "Mountain Retreat",
-    description:
-      "Unplug and unwind in this peaceful mountain cabin. Surrounded by nature, it's a perfect place to recharge.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8aG90ZWxzfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+    "_id": "68dea940af9e62a9918e64ec", // Changed
+    "title": "Opulent 3 BHK in South Mumbai's Elite Sea-View Tower",
+    "description": "Experience high-end living in a truly luxurious residence. This spacious 3 BHK includes a stunning master bedroom with a king-sized bed, plush white upholstered headboard, and glossy Italian marble flooring . The apartment boasts uninterrupted sea views, a full-service modern kitchen, and top-tier security. Amenities include a swimming pool, clubhouse, and dedicated valet parking. Strictly for families/high-profile corporate tenants.",
+    "image": {
+      "url": "https://res.cloudinary.com/dcol8oofr/image/upload/v1759423647/rentillegence_DEV/meobzkvhpt7rlr6nxzjj.jpg",
+      "filename": "rentillegence_DEV/meobzkvhpt7rlr6nxzjj"
     },
-    price: 1000,
-    location: "Aspen",
-    country: "United States",
+    "price": 275000,
+    "location": "Breach Candy, Malabar Hill, Mumbai, Maharashtra",
+    "country": "India",
+    "reviews": [
+      "68dffa35f6a6d5d31db61326", // Changed
+      "68e0a4701f2bf725595ecc91", // Changed
+      "68e0a490437e6ffa6272db13"  // Changed
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        72.80907,
+        18.976433
+      ]
+    },
+    "owner": "68de90adc0a2aa87fdc5ffad", // Changed
+    "__v": 3
   },
   {
-    title: "Historic Villa in Tuscany",
-    description:
-      "Experience the charm of Tuscany in this beautifully restored villa. Explore the rolling hills and vineyards.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG90ZWxzfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+    "_id": "68deab98af9e62a9918e6508", // Changed
+    "title": " Budget-Friendly Single Occupancy PG",
+    "description": "A clean and well-lit room with a large window offering a pleasant view of the surrounding greenery and residential area. Ideal for students or working bachelors who need a no-frills, safe place close to coaching centres and commercial areas. Tiled flooring ensures easy cleaning.",
+    "image": {
+      "url": "https://res.cloudinary.com/dcol8oofr/image/upload/v1759423383/rentillegence_DEV/cm1qe5tm5hn2l3r6fdaf.jpg",
+      "filename": "rentillegence_DEV/cm1qe5tm5hn2l3r6fdaf"
     },
-    price: 2500,
-    location: "Florence",
-    country: "Italy",
+    "price": 12000,
+    "location": "Laxmi Nagar, New Delhi ",
+    "country": "India",
+    "reviews": [],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        77.27518,
+        28.636433
+      ]
+    },
+    "owner": "68de90adc0a2aa87fdc5ffad", // Changed
+    "__v": 0
   },
   {
-    title: "Secluded Treehouse Getaway",
-    description:
-      "Live among the treetops in this unique treehouse retreat. A true nature lover's paradise.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGhvdGVsc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+    "_id": "68deabecaf9e62a9918e650e", // Changed
+    "title": "Premium Co-Living for Professionals",
+    "description": "Step into a hassle-free, fully-managed co-living space designed for the young professional. This single-occupancy room offers a stylish, minimalist aesthetic with white tiled floors, a comfortable bed, and ample storage from a classic wooden wardrobe. Rent is all-inclusive. Just bring your luggage!",
+    "image": {
+      "url": "https://res.cloudinary.com/dcol8oofr/image/upload/v1759423467/rentillegence_DEV/znk4vxo4rbwusgg5kbet.jpg",
+      "filename": "rentillegence_DEV/znk4vxo4rbwusgg5kbet"
     },
-    price: 800,
-    location: "Portland",
-    country: "United States",
+    "price": 9000,
+    "location": "Madhapur, HITECH City, Hyderabad",
+    "country": "India",
+    "reviews": [
+      "68dfcb1584284c8057004fe2" // Changed
+    ],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        78.386493,
+        17.454483
+      ]
+    },
+    "owner": "68de90adc0a2aa87fdc5ffad", // Changed
+    "__v": 1
   },
   {
-    title: "Beachfront Paradise",
-    description:
-      "Step out of your door onto the sandy beach. This beachfront condo offers the ultimate relaxation.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGhvdGVsc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+    "_id": "68dead16af9e62a9918e6526", // Changed
+    "title": "Bohemian 1 BHK with Sunlit Bay Windows - Near Hauz Khas",
+    "description": "Discover a beautifully designed 1 BHK builder floor that serves as a tranquil, sun-drenched sanctuary. This charming space features a large bay window, wooden flooring, and is thoughtfully decorated with natural plants and a mix of vintage furniture. It includes a separate kitchenette and a private terrace space. Located in the heart of Delhi's creative village, surrounded by designer boutiques and cafes.",
+    "image": {
+      "url": "https://res.cloudinary.com/dcol8oofr/image/upload/v1759423765/rentillegence_DEV/mhju4vhqqstbwfwwtvoq.jpg",
+      "filename": "rentillegence_DEV/mhju4vhqqstbwfwwtvoq"
     },
-    price: 2000,
-    location: "Cancun",
-    country: "Mexico",
+    "price": 15000,
+    "location": "Shahpur Jat, South Delhi, NCT",
+    "country": "India",
+    "reviews": [],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        77.21495,
+        28.548437
+      ]
+    },
+    "owner": "68de90adc0a2aa87fdc5ffad", // Changed
+    "__v": 0
   },
   {
-    title: "Rustic Cabin by the Lake",
-    description:
-      "Spend your days fishing and kayaking on the serene lake. This cozy cabin is perfect for outdoor enthusiasts.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fG1vdW50YWlufGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+    "_id": "68dead57af9e62a9918e652c", // Changed
+    "title": "Contemporary 2 BHK with Open Kitchen and Integrated Dining",
+    "description": "A modern 2 BHK apartment designed for urban, minimal living. The highlight is the open-concept kitchen with a sleek island and integrated dining space (resembling image 1), perfect for entertaining. The unit includes full white cabinetry for maximum storage and two spacious bedrooms. Located within a gated community, this apartment offers excellent connectivity to major IT companies and boasts a clubhouse, gym, and children's play area.",
+    "image": {
+      "url": "https://res.cloudinary.com/dcol8oofr/image/upload/v1759423830/rentillegence_DEV/gppkotisjamdy5ljrm3w.jpg",
+      "filename": "rentillegence_DEV/gppkotisjamdy5ljrm3w"
     },
-    price: 900,
-    location: "Lake Tahoe",
-    country: "United States",
+    "price": 42000,
+    "location": "Electronic City Phase 1, Bengaluru, Karnataka",
+    "country": "India",
+    "reviews": [],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        77.665361,
+        12.844966
+      ]
+    },
+    "owner": "68de90adc0a2aa87fdc5ffad", // Changed
+    "__v": 0
   },
   {
-    title: "Luxury Penthouse with City Views",
-    description:
-      "Indulge in luxury living with panoramic city views from this stunning penthouse apartment.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1622396481328-9b1b78cdd9fd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c2t5JTIwdmFjYXRpb258ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
+    "_id": "68deadafaf9e62a9918e6535", // Changed
+    "title": "Quiet & Cozy 1 RK – Ideal for WFH – Abundant Natural Light",
+    "description": "A warm and inviting 1 Room Kitchen (1 RK) unit that feels like a full flat. The space is perfect for plant enthusiasts and features a comfortable seating area , built-in storage, and large windows that fill the room with natural light. Located on a quiet street in a highly desirable, green residential area. The rental price includes a covered two-wheeler parking spot.",
+    "image": {
+      "url": "https://res.cloudinary.com/dcol8oofr/image/upload/v1759423917/rentillegence_DEV/zgbkfw0zrtfjsngibgig.jpg",
+      "filename": "rentillegence_DEV/zgbkfw0zrtfjsngibgig"
     },
-    price: 3500,
-    location: "Los Angeles",
-    country: "United States",
+    "price": 16500,
+    "location": "Koregaon Park Annex, Pune, Maharashtra",
+    "country": "India",
+    "reviews": [],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        73.91196,
+        18.530825
+      ]
+    },
+    "owner": "68de90adc0a2aa87fdc5ffad", // Changed
+    "__v": 0
   },
   {
-    title: "Ski-In/Ski-Out Chalet",
-    description:
-      "Hit the slopes right from your doorstep in this ski-in/ski-out chalet in the Swiss Alps.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1502784444187-359ac186c5bb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHNreSUyMHZhY2F0aW9ufGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+    "_id": "68deae08af9e62a9918e653b", // Changed
+    "title": "Private, AC Room for Male/Female - Prime Parel Location",
+    "description": "A private sanctuary in the heart of the city. This compact single room offers privacy and comfort with premium wooden flooring, blackout curtains, and a personal AC. Perfect for a working professional who desires a quiet retreat after a long day. The room includes a wall-mounted TV provision and a study corner.",
+    "image": {
+      "url": "https://res.cloudinary.com/dcol8oofr/image/upload/v1759424007/rentillegence_DEV/kwdpfqaadxce5wxtvyjc.jpg",
+      "filename": "rentillegence_DEV/kwdpfqaadxce5wxtvyjc"
     },
-    price: 3000,
-    location: "Verbier",
-    country: "Switzerland",
+    "price": 7500,
+    "location": "Lower Parel, Mumbai",
+    "country": "India",
+    "reviews": [],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        72.82956,
+        19.002104
+      ]
+    },
+    "owner": "68de90adc0a2aa87fdc5ffad", // Changed
+    "__v": 0
   },
   {
-    title: "Safari Lodge in the Serengeti",
-    description:
-      "Experience the thrill of the wild in a comfortable safari lodge. Witness the Great Migration up close.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjl8fG1vdW50YWlufGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+    "_id": "68dff61af6a6d5d31db612fd", // Changed
+    "title": "Jury's Luxury Coliving and Men's PG, Kokapet",
+    "description": "Rent property in the heart of Hyderabad city. Fee of Rs for security charges apply. Your search for rented home at ends here. Find best property at affordable rates in Kokapet. Changes can be made to 5 days period months lock-in. Tenants needn't bother about anything as washing machine, fridge, water purifier, etc is provided. 24-hour Full available with this rented property. This property has lift facility. gym free for all residents. It is a and has provision for etc. Guaranteed security and round the clock cctv surveillance facility. Want to rent a property near ? Your search ends here. Very close to city's best hospital, that is, Continental Hospitals, Sankara Eye Hospital Hyderabad, Star Hospitals - Nanakramguda, Financial District.\r\n",
+    "image": {
+      "url": "https://res.cloudinary.com/dcol8oofr/image/upload/v1759507994/rentillegence_DEV/nexlsjt9vskgqot2xttt.jpg",
+      "filename": "rentillegence_DEV/nexlsjt9vskgqot2xttt"
     },
-    price: 4000,
-    location: "Serengeti National Park",
-    country: "Tanzania",
+    "price": 15000,
+    "location": "Kokapet,Hyderabad , Telangana",
+    "country": "India",
+    "reviews": [],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        78.347556,
+        17.385272
+      ]
+    },
+    "owner": "68dff3f0f6a6d5d31db612ee", // Changed
+    "__v": 0
   },
   {
-    title: "Historic Canal House",
-    description:
-      "Stay in a piece of history in this beautifully preserved canal house in Amsterdam's iconic district.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2FtcGluZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+    "_id": "68dff885f6a6d5d31db61307", // Changed
+    "title": "Nest View Heights ,near HITEC City ",
+    "description": "A double sharing room with TV , WiFi  , Homely Food . Perfect for students and working professional who want to stay near collages or tech park .",
+    "image": {
+      "url": "https://res.cloudinary.com/dcol8oofr/image/upload/v1759508613/rentillegence_DEV/vkt3ypqkg5dhoizeud7i.jpg",
+      "filename": "rentillegence_DEV/vkt3ypqkg5dhoizeud7i"
     },
-    price: 1800,
-    location: "Amsterdam",
-    country: "Netherlands",
+    "price": 17000,
+    "location": "Hitech City,Hyderabad , Telangana",
+    "country": "India",
+    "reviews": [],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        78.38147,
+        17.451069
+      ]
+    },
+    "owner": "68dff3f0f6a6d5d31db612ee", // Changed
+    "__v": 0
   },
   {
-    title: "Private Island Retreat",
-    description:
-      "Have an entire island to yourself for a truly exclusive and unforgettable vacation experience.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1618140052121-39fc6db33972?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bG9kZ2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
+    "_id": "68dff9c2f6a6d5d31db6130d", // Changed
+    "title": "My Home Nishada",
+    "description": "A resort-themed residential project comprises large, uber luxurious homes in Kokapet, West of Hyderabad. With smooth connectivity to Hitech City, the financial district and world-class office spaces, Nishada’s eight towers are set amidst 16.68 acres of vast open spaces. Nishada represents an opportunity to live an enviable lifestyle –inclusively exclusive amenities, hospitality services and privileges including an extraordinary park, abundant courtyards and carefully landscaped greenery. For those who are stressed at work all day, Nishada will truly be the divine sanctuary it is designed to be.",
+    "image": {
+      "url": "https://res.cloudinary.com/dcol8oofr/image/upload/v1759508929/rentillegence_DEV/wxkoejk6wvkvwfwkvqhc.webp",
+      "filename": "rentillegence_DEV/wxkoejk6wvkvwfwkvqhc"
     },
-    price: 10000,
-    location: "Fiji",
-    country: "Fiji",
+    "price": 55000,
+    "location": "Kokapet, Hyderabad",
+    "country": "India",
+    "reviews": [],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        78.347556,
+        17.385272
+      ]
+    },
+    "owner": "68dff3f0f6a6d5d31db612ee", // Changed
+    "__v": 0
   },
   {
-    title: "Charming Cottage in the Cotswolds",
-    description:
-      "Escape to the picturesque Cotswolds in this quaint and charming cottage with a thatched roof.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1602088113235-229c19758e9f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YmVhY2glMjB2YWNhdGlvbnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+    "_id": "68e0a042ceba01312c00a14b", // Changed
+    "title": "Executive Studio with AC, TV & Dedicated Workstation, Gurugram",
+    "description": "Experience premium corporate housing in this spacious, hotel-style studio. Features a large King-sized bed, a 50-inch smart TV, dedicated work desk, and subtle, professional decor. Fully air-conditioned with modern tiled flooring and ample natural light. Perfect for an executive or single professional. Located in a secured high-rise with easy access to all business hubs.",
+    "image": {
+      "url": "https://res.cloudinary.com/dcol8oofr/image/upload/v1759551603/rentillegence_DEV/vidzq6wtlprniwfbqmqp.jpg",
+      "filename": "rentillegence_DEV/vidzq6wtlprniwfbqmqp"
     },
-    price: 1200,
-    location: "Cotswolds",
-    country: "United Kingdom",
-  },
-  {
-    title: "Historic Brownstone in Boston",
-    description:
-      "Step back in time in this elegant historic brownstone located in the heart of Boston.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1533619239233-6280475a633a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHNreSUyMHZhY2F0aW9ufGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+    "price": 32000,
+    "location": "DLF Phase 5, Sector 43, Gurugram",
+    "country": "India",
+    "reviews": [],
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        77.100876,
+        28.444502
+      ]
     },
-    price: 2200,
-    location: "Boston",
-    country: "United States",
-  },
-  {
-    title: "Beachfront Bungalow in Bali",
-    description:
-      "Relax on the sandy shores of Bali in this beautiful beachfront bungalow with a private pool.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1602391833977-358a52198938?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzJ8fGNhbXBpbmd8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
-    },
-    price: 1800,
-    location: "Bali",
-    country: "Indonesia",
-  },
-  {
-    title: "Mountain View Cabin in Banff",
-    description:
-      "Enjoy breathtaking mountain views from this cozy cabin in the Canadian Rockies.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1521401830884-6c03c1c87ebb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGxvZGdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
-    },
-    price: 1500,
-    location: "Banff",
-    country: "Canada",
-  },
-  {
-    title: "Art Deco Apartment in Miami",
-    description:
-      "Step into the glamour of the 1920s in this stylish Art Deco apartment in South Beach.",
-    image: {
-      filename: "listingimage",
-      url: "https://plus.unsplash.com/premium_photo-1670963964797-942df1804579?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGxvZGdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
-    },
-    price: 1600,
-    location: "Miami",
-    country: "United States",
-  },
-  {
-    title: "Tropical Villa in Phuket",
-    description:
-      "Escape to a tropical paradise in this luxurious villa with a private infinity pool in Phuket.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1470165301023-58dab8118cc9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGxvZGdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
-    },
-    price: 3000,
-    location: "Phuket",
-    country: "Thailand",
-  },
-  {
-    title: "Historic Castle in Scotland",
-    description:
-      "Live like royalty in this historic castle in the Scottish Highlands. Explore the rugged beauty of the area.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1585543805890-6051f7829f98?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGJlYWNoJTIwdmFjYXRpb258ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
-    },
-    price: 4000,
-    location: "Scottish Highlands",
-    country: "United Kingdom",
-  },
-  {
-    title: "Desert Oasis in Dubai",
-    description:
-      "Experience luxury in the middle of the desert in this opulent oasis in Dubai with a private pool.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1518684079-3c830dcef090?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZHViYWl8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
-    },
-    price: 5000,
-    location: "Dubai",
-    country: "United Arab Emirates",
-  },
-  {
-    title: "Rustic Log Cabin in Montana",
-    description:
-      "Unplug and unwind in this cozy log cabin surrounded by the natural beauty of Montana.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1586375300773-8384e3e4916f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGxvZGdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
-    },
-    price: 1100,
-    location: "Montana",
-    country: "United States",
-  },
-  {
-    title: "Beachfront Villa in Greece",
-    description:
-      "Enjoy the crystal-clear waters of the Mediterranean in this beautiful beachfront villa on a Greek island.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1602343168117-bb8ffe3e2e9f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8dmlsbGF8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
-    },
-    price: 2500,
-    location: "Mykonos",
-    country: "Greece",
-  },
-  {
-    title: "Eco-Friendly Treehouse Retreat",
-    description:
-      "Stay in an eco-friendly treehouse nestled in the forest. It's the perfect escape for nature lovers.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1488462237308-ecaa28b729d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8c2t5JTIwdmFjYXRpb258ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
-    },
-    price: 750,
-    location: "Costa Rica",
-    country: "Costa Rica",
-  },
-  {
-    title: "Historic Cottage in Charleston",
-    description:
-      "Experience the charm of historic Charleston in this beautifully restored cottage with a private garden.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1587381420270-3e1a5b9e6904?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGxvZGdlfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
-    },
-    price: 1600,
-    location: "Charleston",
-    country: "United States",
-  },
-  {
-    title: "Modern Apartment in Tokyo",
-    description:
-      "Explore the vibrant city of Tokyo from this modern and centrally located apartment.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1480796927426-f609979314bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHRva3lvfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
-    },
-    price: 2000,
-    location: "Tokyo",
-    country: "Japan",
-  },
-  {
-    title: "Lakefront Cabin in New Hampshire",
-    description:
-      "Spend your days by the lake in this cozy cabin in the scenic White Mountains of New Hampshire.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1578645510447-e20b4311e3ce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDF8fGNhbXBpbmd8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
-    },
-    price: 1200,
-    location: "New Hampshire",
-    country: "United States",
-  },
-  {
-    title: "Luxury Villa in the Maldives",
-    description:
-      "Indulge in luxury in this overwater villa in the Maldives with stunning views of the Indian Ocean.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1439066615861-d1af74d74000?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bGFrZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
-    },
-    price: 6000,
-    location: "Maldives",
-    country: "Maldives",
-  },
-  {
-    title: "Ski Chalet in Aspen",
-    description:
-      "Hit the slopes in style with this luxurious ski chalet in the world-famous Aspen ski resort.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGxha2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
-    },
-    price: 4000,
-    location: "Aspen",
-    country: "United States",
-  },
-  {
-    title: "Secluded Beach House in Costa Rica",
-    description:
-      "Escape to a secluded beach house on the Pacific coast of Costa Rica. Surf, relax, and unwind.",
-    image: {
-      filename: "listingimage",
-      url: "https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmVhY2glMjBob3VzZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
-    },
-    price: 1800,
-    location: "Costa Rica",
-    country: "Costa Rica",
+    "owner": "68e09fceceba01312c00a143", // Changed
+    "__v": 0
   },
 ];
 

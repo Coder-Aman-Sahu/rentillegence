@@ -24,6 +24,17 @@ router.route("/login")
         userController.login
    );
 
+router.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+// The callback route that Google redirects to
+router.get('/auth/google/callback', 
+  passport.authenticate('google', { 
+    failureRedirect: '/login', 
+    failureFlash: 'Google sign-in failed. Please try again.' 
+  }),
+  userController.login);
+
 //Logout Route
 router.get("/logout",userController.logout);
 

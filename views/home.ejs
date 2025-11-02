@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rentillegence - Find Your Home, Intelligently</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <style>
+    /* --- Base --- */
+    body {
+      font-family: "Plus Jakarta Sans", sans-serif !important;
+      background-color: #fff;
+    }
+    .brand-red { color: #fe424d; }
+    .section-title { font-size: 2.8rem; font-weight: 700; margin-bottom: 4rem; }
+
+    /* --- Floating Navbar --- */
+    .home-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1030;
+      padding: 1.5rem 3rem;
+      background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 100%);
+      transition: background-color 0.3s ease;
+    }
+    .home-nav.navbar-solid {
+      background-color: #fff !important;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .home-nav .navbar-brand {
+      font-size: 1.5rem; color: white; font-weight: 700;
+      transition: color 0.3s ease;
+    }
+    .home-nav.navbar-solid .navbar-brand { color: #222; }
+    .home-nav .navbar-brand i { color: #fe424d; margin-right: 0.5rem; }
+    .nav-btn {
+      font-weight: 600; font-size: 0.9rem; padding: 0.6rem 1.2rem;
+      border-radius: 50px; text-decoration: none; transition: all 0.3s ease;
+    }
+    .btn-login {
+      background-color: rgba(255, 255, 255, 0.2); color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3); margin-right: 0.5rem;
+    }
+    .btn-login:hover { background-color: white; color: #333; }
+    .home-nav.navbar-solid .btn-login { color: #333; border-color: #ddd; }
+    .btn-signup { background-color: #fe424d; color: white; border: 1px solid #fe424d; }
+    .btn-signup:hover { background-color: white; color: #fe424d; }
+
+    /* --- Hero Section --- */
+    .hero-section {
+      height: 100vh; min-height: 700px; position: relative;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; color: white; overflow: hidden;
+    }
+    #heroBgCarousel .carousel-item { height: 100vh; min-height: 700px; }
+    #heroBgCarousel .carousel-image {
+      width: 100%; height: 100%; object-fit: cover;
+      background-position: center; filter: brightness(0.5);
+      transform: scale(1.1); animation: kenburns 20s infinite;
+    }
+    @keyframes kenburns {
+      0% { transform: scale(1.1); } 50% { transform: scale(1.2); } 100% { transform: scale(1.1); }
+    }
+    .hero-caption {
+      position: relative; z-index: 2; max-width: 800px;
+      padding: 0 1rem; text-shadow: 0 2px 5px rgba(0,0,0,0.7);
+    }
+    .hero-caption h1 {
+      font-size: 3.8rem; font-weight: 800; margin-bottom: 1rem;
+    }
+    .hero-caption .typing-container {
+      font-size: 1.5rem; font-weight: 500; color: #f8f9fa;
+      height: 3rem; margin-bottom: 2.5rem;
+    }
+    .hero-caption .typed-text {
+      border-right: 0.15em solid #fe424d;
+      animation: blink-caret 0.75s step-end infinite;
+    }
+    @keyframes blink-caret {
+      from, to { border-color: transparent } 50% { border-color: #fe424d }
+    }
+    .hero-btn {
+      font-size: 1.2rem; font-weight: 600; padding: 1rem 3rem;
+      border-radius: 50px; background-color: #fe424d;
+      border: 2px solid #fe424d; color: white;
+      text-decoration: none; transition: all 0.3s ease;
+    }
+    .hero-btn:hover {
+      background-color: white; color: #fe424d;
+      border-color: white; transform: scale(1.05);
+    }
+
+    /* --- Page Content Wrapper --- */
+    .page-content { position: relative; background-color: #fff; z-index: 5; }
+    .flash-container {
+      max-width: 1200px; position: relative; z-index: 5;
+      margin: 2rem auto; padding: 0 1rem;
+    }
+
+    /* --- How It Works Section --- */
+    .how-it-works { padding: 6rem 2rem; }
+    .step-card {
+      border: 1px solid #eee; border-radius: 15px;
+      padding: 2rem; text-align: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+    }
+    .step-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+    }
+    .step-number {
+      font-size: 1rem; font-weight: 700; color: #fe424d;
+      margin-bottom: 1rem;
+    }
+    .step-icon {
+      font-size: 3rem; margin-bottom: 1.5rem; color: #fe424d;
+    }
+    .step-card h4 { font-weight: 600; margin-bottom: 1rem; }
+    .step-card p { color: #6c757d; }
+    .step-arrow { font-size: 2rem; color: #ddd; margin-top: 100px; }
+
+    /* --- Featured Listings Section --- */
+    .featured-section {
+      padding: 6rem 0;
+      background-color: #f8f9fa;
+    }
+    .featured-carousel .carousel-item {
+      /* Show 3 cards on desktop, 1 on mobile */
+      padding: 0 60px; /* Make space for controls */
+    }
+    .carousel-control-prev, .carousel-control-next {
+      width: 5%;
+    }
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+      background-color: rgba(0,0,0,0.5);
+      border-radius: 50%;
+    }
+
+    /* ⬇️ --- NEW FEATURED CARD STYLES --- ⬇️ */
+    .featured-card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: #222;
+      margin: 0.5rem;
+    }
+    .featured-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+    .featured-card-img {
+      height: 15rem;
+      width: 100%;
+      object-fit: cover;
+      position: relative;
+    }
+    .card-badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(255,255,255,0.9);
+      color: #fe424d;
+      padding: 0.3rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .featured-card-body {
+      padding: 1.5rem;
+    }
+    .featured-card-body h5 {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .featured-card-body .card-location {
+      font-size: 0.9rem;
+      color: #6c757d;
+      margin-bottom: 1rem;
+    }
+    .featured-card-body .card-price {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fe424d;
+    }
+    .card-view-btn {
+      display: block;
+      background: #f1f3f5;
+      color: #333;
+      text-align: center;
+      padding: 0.8rem;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    .card-view-btn:hover {
+      background: #fe424d;
+      color: white;
+    }
+    /* ⬆️ --- END OF NEW CARD STYLES --- ⬆️ */
+
+
+    /* --- Pricing Section --- */
+    .pricing-section { padding: 6rem 2rem; }
+    .pricing-card {
+      border: 1px solid #ddd; border-radius: 15px;
+      padding: 2.5rem; transition: all 0.3s ease;
+    }
+    .pricing-card-premium {
+      border-color: #fe424d;
+      box-shadow: 0 10px 40px rgba(254, 66, 77, 0.2);
+    }
+    .pricing-card h3 { font-weight: 700; }
+    .pricing-card .price {
+      font-size: 3rem; font-weight: 800; color: #fe424d;
+    }
+    .pricing-card .price span {
+      font-size: 1rem; font-weight: 400; color: #6c757d;
+    }
+    .pricing-card ul { list-style: none; padding: 0; margin: 2rem 0; }
+    .pricing-card li { padding: 0.75rem 0; border-bottom: 1px solid #f0f0f0; }
+    .pricing-card li i { color: #fe424d; margin-right: 0.5rem; }
+    .pricing-card li i.fa-xmark { color: #ccc; }
+    .pricing-card .btn {
+      width: 100%; padding: 0.8rem; border-radius: 50px;
+      font-weight: 600;
+    }
+
+    /* --- Testimonials Section --- */
+    .testimonials-section { padding: 6rem 2rem; background-color: #f8f9fa; }
+    .testimonial-card {
+      border: none;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+      border-radius: 15px; overflow: hidden;
+    }
+    .testimonial-card .card-body { padding: 2rem; }
+    .testimonial-img {
+      width: 70px; height: 70px; border-radius: 50%;
+      object-fit: cover; float: left; margin-right: 1.5rem;
+    }
+    .testimonial-card .card-title { font-weight: 700; margin-bottom: 0; }
+    .testimonial-card .card-subtitle { font-size: 0.9rem; color: #6c757d; }
+    .testimonial-card .card-text {
+      padding-top: 1.5rem; font-style: italic; color: #333;
+    }
+
+    /* --- Final Call-to-Action Section --- */
+    .cta-section {
+      background: linear-gradient(45deg, #fe424d, #ff6a88);
+      padding: 6rem 2rem; color: white;
+    }
+    .cta-section h2 { font-weight: 700; font-size: 2.8rem; }
+
+    @media (max-width: 992px) {
+      .step-arrow { display: none; }
+    }
+    @media (max-width: 768px) {
+      .hero-caption h1 { font-size: 2.5rem; }
+      .hero-caption p { font-size: 1.1rem; }
+      .typing-container { font-size: 1.2rem; height: 2.5rem; }
+      .home-nav { padding: 1rem; }
+      .cta-section h2, .section-title { font-size: 2rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="home-nav d-flex justify-content-between align-items-center">
+    <a class="navbar-brand" href="/">
+      <i class="fa-regular fa-compass"></i>
+      Rentillegence
+    </a>
+    <div>
+      <% if(!currUser){ %>
+        <a href="/login" class="nav-btn btn-login">Login</a>
+        <a href="/signup" class="nav-btn btn-signup">Sign Up</a>
+      <% } else { %>
+        <a href="/listings" class="nav-btn btn-login">Dashboard</a>
+        <a href="/logout" class="nav-btn btn-signup">Logout</a>
+      <% } %>
+    </div>
+  </nav>
+
+  <header class="hero-section">
+    <div id="heroBgCarousel" class="carousel slide" data-bs-ride="carousel" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1920&q=80" class="d-block carousel-image" alt="Modern home interior">
+        </div>
+        <div class="carousel-item">
+          <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1920&q=80" class="d-block carousel-image" alt="Cozy living room">
+        </div>
+      </div>
+    </div>
+    
+    <div class="hero-caption">
+      <h1>Find your home, not just a listing.</h1>
+      <div class="typing-container">
+        <span>I'm looking for... </span>
+        <span id="typed-text" class="typed-text"></span>
+      </div>
+      <a href="/listings" class="hero-btn">
+        <i class="fa-solid fa-wand-magic-sparkles"></i>
+        Start Your AI Search
+      </a>
+    </div>
+  </header>
+
+  <main class="page-content">
+
+    <div class="flash-container">
+      <%- include("includes/flash.ejs") %>
+    </div>
+
+    <section class="container how-it-works">
+      <h2 class="text-center section-title">Your Smart Search in 3 Steps</h2>
+      <div class="row d-flex align-items-center justify-content-center">
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="step-card">
+            <div class="step-number">STEP 1</div>
+            <i class="fa-solid fa-comments step-icon"></i>
+            <h4>Describe Your Dream</h4>
+            <p>Tell our AI what you want, just like you'd tell a friend. "A quiet 2BHK with a balcony near Hitec City."</p>
+          </div>
+        </div>
+        <div class="col-lg-1 d-none d-lg-block text-center">
+          <i class="fa-solid fa-arrow-right step-arrow"></i>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="step-card">
+            <div class="step-number">STEP 2</div>
+            <i class="fa-solid fa-house-circle-check step-icon"></i>
+            <h4>Get Smart Matches</h4>
+            <p>Rentillegence understands "quiet" and "modern." We show you listings that *feel* right, not just match keywords.</p>
+          </div>
+        </div>
+        <div class="col-lg-1 d-none d-lg-block text-center">
+          <i class="fa-solid fa-arrow-right step-arrow"></i>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="step-card">
+            <div class="step-number">STEP 3</div>
+            <i class="fa-solid fa-map-location-dot step-icon"></i>
+            <h4>Explore the Area</h4>
+            <p>See exactly what's nearby. Our maps show the closest metros, hospitals, and schools for every single listing.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="featured-section">
+      <div class="container" style="max-width: 1200px;">
+        <h2 class="text-center section-title">Featured Rentals</h2>
+        <div id="featuredCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            
+            <div class="carousel-item active">
+              <div class="row">
+                <div class="col-lg-4 col-md-6 mb-3">
+                  <div class="featured-card">
+                    <div style="position: relative;">
+                      <img src="https://res.cloudinary.com/dcol8oofr/image/upload/v1761986064/rentillegence_DEV/k3bghzwjihpruvdd0gc3.jpg" class="featured-card-img" alt="Executive Studio, Gurugram">
+                      <div class="card-badge">WFH Ready</div>
+                    </div>
+                    <div class="featured-card-body">
+                      <h5>Executive Studio</h5>
+                      <p class="card-location">DLF Phase 5, Gurugram</p>
+                      <p class="card-price">&#8377; 32,000 <span>/ month</span></p>
+                    </div>
+                    <a href="/listings" class="card-view-btn">View Details</a>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-3">
+                  <div class="featured-card">
+                    <div style="position: relative;">
+                      <img src="https://res.cloudinary.com/dcol8oofr/image/upload/v1759421691/rentillegence_DEV/xf4je0yicnmdtf2t6j62.jpg" class="featured-card-img" alt="Spacious 2 BHK, HSR Layout">
+                      <div class="card-badge">Near Tech Parks</div>
+                    </div>
+                    <div class="featured-card-body">
+                      <h5>Spacious 2 BHK</h5>
+                      <p class="card-location">HSR Layout, Bengaluru</p>
+                      <p class="card-price">&#8377; 28,000 <span>/ month</span></p>
+                    </div>
+                    <a href="/listings" class="card-view-btn">View Details</a>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 d-none d-lg-block mb-3">
+                  <div class="featured-card">
+                    <div style="position: relative;">
+                      <img src="https://res.cloudinary.com/dcol8oofr/image/upload/v1759423647/rentillegence_DEV/meobzkvhpt7rlr6nxzjj.jpg" class="featured-card-img" alt="Opulent 3 BHK, South Mumbai">
+                      <div class="card-badge">Luxury Living</div>
+                    </div>
+                    <div class="featured-card-body">
+                      <h5>Opulent 3 BHK</h5>
+                      <p class="card-location">Malabar Hill, Mumbai</p>
+                      <p class="card-price">&#8377; 2,75,000 <span>/ month</span></p>
+                    </div>
+                    <a href="/listings" class="card-view-btn">View Details</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="carousel-item">
+              <div class="row">
+                <div class="col-lg-4 col-md-6 d-none d-md-block mb-3">
+                  <div class="featured-card">
+                    <div style="position: relative;">
+                      <img src="https://res.cloudinary.com/dcol8oofr/image/upload/v1759423765/rentillegence_DEV/mhju4vhqqstbwfwwtvoq.jpg" class="featured-card-img" alt="Nest View Heights, HITEC City">
+                      <div class="card-badge">Near HITEC City</div>
+                    </div>
+                    <div class="featured-card-body">
+                      <h5>Nest View Heights</h5>
+                      <p class="card-location">Hitec City, Hyderabad</p>
+                      <p class="card-price">&#8377; 17,000 <span>/ month</span></p>
+                    </div>
+                    <a href="/listings" class="card-view-btn">View Details</a>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-3">
+                  <div class="featured-card">
+                    <div style="position: relative;">
+                      <img src="https://res.cloudinary.com/dcol8oofr/image/upload/v1759423917/rentillegence_DEV/zgbkfw0zrtfjsngibgig.jpg" class="featured-card-img" alt="Cozy 1 RK, Koregaon Park">
+                      <div class="card-badge">AI Pick</div>
+                    </div>
+                    <div class="featured-card-body">
+                      <h5>Cozy 1 RK</h5>
+                      <p class="card-location">Koregaon Park, Pune</p>
+                      <p class="card-price">&#8377; 16,500 <span>/ month</span></p>
+                    </div>
+                    <a href="/listings" class="card-view-btn">View Details</a>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 d-none d-lg-block mb-3">
+                  <div class="featured-card">
+                    <div style="position: relative;">
+                      <img src="https://res.cloudinary.com/dcol8oofr/image/upload/v1759423467/rentillegence_DEV/znk4vxo4rbwusgg5kbet.jpg" class="featured-card-img" alt="Premium Co-Living, Madhapur">
+                      <div class="card-badge">Budget Friendly</div>
+                    </div>
+                    <div class="featured-card-body">
+                      <h5>Premium Co-Living</h5>
+                      <p class="card-location">Madhapur, Hyderabad</p>
+                      <p class="card-price">&#8377; 9,000 <span>/ month</span></p>
+                    </div>
+                    <a href="/listings" class="card-view-btn">View Details</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#featuredCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#featuredCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="container pricing-section">
+      <h2 class="text-center section-title">Simple, Transparent Plans</h2>
+      <div class="row justify-content-center g-4">
+        
+        <div class="col-lg-5">
+          <div class="pricing-card">
+            <h3>Basic</h3>
+            <p class="text-muted">For casual browsing</p>
+            <div class="price">Free</div>
+            <ul>
+              <li><i class="fa-solid fa-check"></i>Unlimited AI Searches</li>
+              <li><i class="fa-solid fa-check"></i>Browse All Listings</li>
+              <li><i class="fa-solid fa-check"></i>View Interactive Maps</li>
+              <li class="text-muted"><i class="fa-solid fa-xmark"></i> Direct Owner Contact</li>
+              <li class="text-muted"><i class="fa-solid fa-xmark"></i> See Nearby Amenity Distances</li>
+              <li class="text-muted"><i class="fa-solid fa-xmark"></i> Verified Owner Badges</li>
+            </ul>
+            <a href="/listings" class="btn btn-outline-dark">Start Searching</a>
+          </div>
+        </div>
+
+        <div class="col-lg-5">
+          <div class="pricing-card pricing-card-premium">
+            <h3>Premium</h3>
+            <p class="text-muted">For the serious renter</p>
+            <div class="price">₹499 <span>/ quarter</span></div>
+            <ul>
+              <li><i class="fa-solid fa-check"></i>Unlimited AI Searches</li>
+              <li><i class="fa-solid fa-check"></i>Browse All Listings</li>
+              <li><i class="fa-solid fa-check"></i>View Interactive Maps</li>
+              <li><i class="fa-solid fa-check"></i> <b>Direct Owner Contact</b></li>
+              <li><i class="fa-solid fa-check"></i> <b>See Nearby Amenity Distances</b></li>
+              <li><i class="fa-solid fa-check"></i> <b>Verified Owner Badges</b></li>
+            </ul>
+            <a href="/signup" class="btn btn-danger">Get Started with Premium</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="testimonials-section">
+      <div class="container" style="max-width: 1200px;">
+        <h2 class="text-center section-title">Don't just take our word for it.</h2>
+        <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="row justify-content-center">
+                <div class="col-md-8">
+                  <div class="card testimonial-card">
+                    <div class="card-body">
+                      <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&q=80" class="testimonial-img" alt="User">
+                      <h5 class="card-title">Priya S., Software Engineer</h5>
+                      <h6 class="card-subtitle mb-2">Moved to Bengaluru</h6>
+                      <p class="card-text">"The AI search was a game-changer. I just typed 'pet-friendly 2BHK near HSR Layout' and found my apartment in 10 minutes. Unbelievable."</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="row justify-content-center">
+                <div class="col-md-8">
+                  <div class="card testimonial-card">
+                    <div class="card-body">
+                      <img src="https://images.unsplash.com/photo-1552058544-f2b08422138a?auto=format&fit=crop&w=100&q=80" class="testimonial-img" alt="User">
+                      <h5 class="card-title">Rohan M., Marketing Manager</h5>
+                      <h6 class="card-subtitle mb-2">Relocated to Gurugram</h6>
+                      <p class="card-text">"I needed a quiet place for WFH with good internet. Rentillegence understood what 'quiet' meant and filtered out places on busy roads. 10/10."</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container text-center" style="max-width: 900px;">
+        <h2 class="mb-4">Your next home is waiting.</h2>
+        <a href="/listings" class="hero-btn">Start Exploring Now</a>
+      </div>
+    </section>
+  
+  </main>
+  
+  <%- include("includes/footer.ejs") %>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      // --- Navbar Scroll Effect ---
+      const navbar = document.querySelector('.home-nav');
+      if (navbar) {
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > 50) {
+            navbar.classList.add('navbar-solid');
+          } else {
+            navbar.classList.remove('navbar-solid');
+          }
+        });
+      }
+
+      // --- Typing Animation ---
+      const typedTextSpan = document.getElementById("typed-text");
+      const textArray = [
+        "a quiet studio near a metro.",
+        "a 3-bedroom with a gym.",
+        "a pet-friendly apartment.",
+        "a WFH-ready 1BHK."
+      ];
+      const typingDelay = 100;
+      const erasingDelay = 50;
+      const newTextDelay = 2000;
+      let textArrayIndex = 0;
+      let charIndex = 0;
+
+      function type() {
+        if (charIndex < textArray[textArrayIndex].length) {
+          if (typedTextSpan) {
+            typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
+          }
+          charIndex++;
+          setTimeout(type, typingDelay);
+        } else {
+          setTimeout(erase, newTextDelay);
+        }
+      }
+
+      function erase() {
+        if (charIndex > 0) {
+          if (typedTextSpan) {
+            typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex - 1);
+          }
+          charIndex--;
+          setTimeout(erase, erasingDelay);
+        } else {
+          textArrayIndex++;
+          if (textArrayIndex >= textArray.length) textArrayIndex = 0;
+          setTimeout(type, typingDelay + 1100);
+        }
+      }
+
+      if (typedTextSpan) {
+        setTimeout(type, newTextDelay + 250); // Start the animation
+      }
+    });
+  </script>
+</body>
+</html>

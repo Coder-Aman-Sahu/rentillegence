@@ -1,6 +1,6 @@
 {
   "engines": {
-    "node": "22.13.1"
+    "node": "22.x"
   },
   "name": "rentillegence",
   "version": "1.0.0",

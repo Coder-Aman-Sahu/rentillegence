@@ -6,7 +6,10 @@ const Listing = require("./models/listing.js");
 const express=require("express");
 const app=express();
 app.set('trust proxy', 1);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 202948826d841311f98511068836d8b48e1389cf
 const mongoose=require("mongoose");
 const path=require("path");
 const methodOverride=require("method-override");

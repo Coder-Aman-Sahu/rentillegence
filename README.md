@@ -2,8 +2,8 @@
 
 ## 🌐 Live Demo  
 The project is live at:  
-- [https://rentillegence.onrender.com/listings](https://rentillegence.onrender.com/listings)  
-- [https://rentillegence-t2yp.vercel.app/listings](https://rentillegence-t2yp.vercel.app/listings)  
+- [https://rentillegence.onrender.com/listings](https://rentillegence.onrender.com)  
+- [https://rentillegence-t2yp.vercel.app/listings](https://rentillegence-t2yp.vercel.app)  
 
 ---
 

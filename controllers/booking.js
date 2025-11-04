@@ -1,14 +1,19 @@
 const Listing = require("../models/listing");
 const Booking = require("../models/booking");
 const PDFDocument = require("pdfkit");
+const fs = require("fs");
+const path = require("path");
 
 // --- HELPER FUNCTIONS ---
 
 // Helper: Calculate all costs
 function calculateCosts(price) {
-  const advanceAmount = price; 
-  const commissionAmount = parseFloat((advanceAmount * 0.025).toFixed(2));
-  const totalAmount = advanceAmount + commissionAmount;
+  // Advance amount is twice the monthly price (e.g., security + advance)
+  const advanceAmount = price * 2;
+  // Commission as 2.5% of subtotal (price + advance) to be a bit more realistic
+  const commissionAmount = parseFloat(((price + advanceAmount) * 0.025).toFixed(2));
+  // Total payable = price (first month) + advanceAmount + commission
+  const totalAmount = parseFloat((price + advanceAmount + commissionAmount).toFixed(2));
   return { advanceAmount, commissionAmount, totalAmount };
 }
 
@@ -151,7 +156,6 @@ module.exports.rejectBooking = async (req, res) => {
 };
 
 // Flow 3: Generate the PDF Agreement
-// Flow 3: Generate the PDF Agreement
 module.exports.generateAgreement = async (req, res) => {
   try {
     const bookingId = req.params.id;
@@ -198,6 +202,17 @@ module.exports.generateAgreement = async (req, res) => {
        .fillColor("#e8e8e8")
        .text(`Agreement ID: ${booking._id.toString().substring(0, 16).toUpperCase()} | Executed: ${new Date(booking.createdAt).toLocaleDateString("en-IN", { day: '2-digit', month: 'short', year: 'numeric' })}`, 
          leftMargin, 68, { align: "center", width: pageWidth });
+
+    // Attempt to add a corporate seal image top-right (if available)
+    try {
+      const sealPath = path.join(__dirname, "..", "public", "images", "seal.png");
+      if (fs.existsSync(sealPath)) {
+        // place seal on header top-right with slight opacity
+        doc.image(sealPath, leftMargin + pageWidth - 70, 32, { width: 60, opacity: 0.9 });
+      }
+    } catch (e) {
+      // ignore image errors, proceed without seal
+    }
 
     doc.y = 105;
 
@@ -262,10 +277,10 @@ module.exports.generateAgreement = async (req, res) => {
     doc.text("Monthly Rent:", col2X, finY);
     doc.text(`₹${listing.price.toLocaleString("en-IN")}`, col2X + 130, finY, { width: 100, align: 'right' });
     
-    doc.text("Security Deposit:", col2X, finY + 12);
+    doc.text("Security Deposit (2 months):", col2X, finY + 12);
     doc.text(`₹${advanceAmount.toLocaleString("en-IN")}`, col2X + 130, finY + 12, { width: 100, align: 'right' });
     
-    doc.text("Platform Fee (2.5%):", col2X, finY + 24);
+    doc.text("Platform Fee (2.5% on subtotal):", col2X, finY + 24);
     doc.text(`₹${commissionAmount.toLocaleString("en-IN")}`, col2X + 130, finY + 24, { width: 100, align: 'right' });
     
     doc.rect(col2X, finY + 37, 230, 0.5).fill("#bbb");
@@ -287,8 +302,8 @@ module.exports.generateAgreement = async (req, res) => {
     doc.moveDown(0.2);
 
     const terms = [
-      `Rent of ₹${listing.price.toLocaleString("en-IN")} payable by the 5th of each month. Late payment may incur penalties.`,
-      `Security Deposit refundable within 30 days post-termination, less deductions for damages or dues.`,
+      `Rent of ₹${listing.price.toLocaleString("en-IN")} payable by the 5th of each month. Late payment may incur penalties.` ,
+      `Security Deposit (₹${advanceAmount.toLocaleString("en-IN")}) refundable within 30 days post-termination, less deductions for damages or dues.`,
       `Platform Fee of ₹${commissionAmount.toLocaleString("en-IN")} is non-refundable and covers service charges.`,
       `Tenant shall maintain property condition and not make structural changes without written consent.`,
       `Either party may terminate with 30 days' written notice. Early termination may forfeit deposit.`,
@@ -329,6 +344,13 @@ module.exports.generateAgreement = async (req, res) => {
          .text("✓ SIGNED", leftMargin + 8, sigY + 6);
       doc.fillColor("#999").fontSize(6).font("Helvetica")
          .text(new Date().toLocaleDateString("en-IN"), leftMargin + 8, sigY + 16);
+      // add seal near owner's signed box if available
+      try {
+        const sealPath = path.join(__dirname, "..", "public", "images", "seal.png");
+        if (fs.existsSync(sealPath)) {
+          doc.image(sealPath, leftMargin + sigBoxWidth - 30, sigY + sigBoxHeight - 28, { width: 24, opacity: 0.95 });
+        }
+      } catch (e) {}
     } else {
       doc.fillColor("#999").fontSize(7).font("Helvetica-Oblique")
          .text("Pending Signature", leftMargin + 8, sigY + 6);
@@ -348,6 +370,13 @@ module.exports.generateAgreement = async (req, res) => {
          .text("✓ SIGNED", sig2X + 8, sigY + 6);
       doc.fillColor("#999").fontSize(6).font("Helvetica")
          .text(new Date().toLocaleDateString("en-IN"), sig2X + 8, sigY + 16);
+      // add seal near tenant's signed box if available
+      try {
+        const sealPath = path.join(__dirname, "..", "public", "images", "seal.png");
+        if (fs.existsSync(sealPath)) {
+          doc.image(sealPath, sig2X + sigBoxWidth - 30, sigY + sigBoxHeight - 28, { width: 24, opacity: 0.95 });
+        }
+      } catch (e) {}
     } else {
       doc.fillColor("#999").fontSize(7).font("Helvetica-Oblique")
          .text("Pending Signature", sig2X + 8, sigY + 6);
@@ -439,4 +468,3 @@ module.exports.simulatePayment = async (req, res) => {
   req.flash("success", "Payment successful! Your booking is confirmed.");
   res.redirect("/dashboard");
 };
-

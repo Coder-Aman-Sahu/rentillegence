@@ -275,20 +275,20 @@ module.exports.generateAgreement = async (req, res) => {
     const finY = doc.y;
     doc.fontSize(7.5).font("Helvetica").fillColor("#444");
     doc.text("Monthly Rent:", col2X, finY);
-    doc.text(`₹${listing.price.toLocaleString("en-IN")}`, col2X + 130, finY, { width: 100, align: 'right' });
+    doc.text(`Rs. ${listing.price.toLocaleString("en-IN")}`, col2X + 130, finY, { width: 100, align: 'right' });
     
     doc.text("Security Deposit (2 months):", col2X, finY + 12);
-    doc.text(`₹${advanceAmount.toLocaleString("en-IN")}`, col2X + 130, finY + 12, { width: 100, align: 'right' });
+    doc.text(`Rs. ${advanceAmount.toLocaleString("en-IN")}`, col2X + 130, finY + 12, { width: 100, align: 'right' });
     
     doc.text("Platform Fee (2.5% on subtotal):", col2X, finY + 24);
-    doc.text(`₹${commissionAmount.toLocaleString("en-IN")}`, col2X + 130, finY + 24, { width: 100, align: 'right' });
+    doc.text(`Rs. ${commissionAmount.toLocaleString("en-IN")}`, col2X + 130, finY + 24, { width: 100, align: 'right' });
     
     doc.rect(col2X, finY + 37, 230, 0.5).fill("#bbb");
     
     doc.fontSize(8.5).font("Helvetica-Bold").fillColor("#1a1a2e");
     doc.text("TOTAL PAYABLE:", col2X, finY + 42);
     doc.fillColor("#d32f2f");
-    doc.text(`₹${booking.totalAmount.toLocaleString("en-IN")}`, col2X + 130, finY + 42, { width: 100, align: 'right' });
+    doc.text(`Rs. ${booking.totalAmount.toLocaleString("en-IN")}`, col2X + 130, finY + 42, { width: 100, align: 'right' });
 
     doc.y = Math.max(doc.y, sectionY + 90);
     doc.moveDown(0.5);
@@ -302,9 +302,9 @@ module.exports.generateAgreement = async (req, res) => {
     doc.moveDown(0.2);
 
     const terms = [
-      `Rent of ₹${listing.price.toLocaleString("en-IN")} payable by the 5th of each month. Late payment may incur penalties.` ,
-      `Security Deposit (₹${advanceAmount.toLocaleString("en-IN")}) refundable within 30 days post-termination, less deductions for damages or dues.`,
-      `Platform Fee of ₹${commissionAmount.toLocaleString("en-IN")} is non-refundable and covers service charges.`,
+      `Rent of Rs. ${listing.price.toLocaleString("en-IN")} payable by the 5th of each month. Late payment may incur penalties.` ,
+      `Security Deposit (Rs. ${advanceAmount.toLocaleString("en-IN")}) refundable within 30 days post-termination, less deductions for damages or dues.`,
+      `Platform Fee of Rs. ${commissionAmount.toLocaleString("en-IN")} is non-refundable and covers service charges.`,
       `Tenant shall maintain property condition and not make structural changes without written consent.`,
       `Either party may terminate with 30 days' written notice. Early termination may forfeit deposit.`,
       `Utilities and maintenance responsibilities as per mutual agreement. Tenant liable for property damage.`

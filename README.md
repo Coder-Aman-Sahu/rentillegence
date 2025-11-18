@@ -73,3 +73,124 @@ It also automates the entire rental agreement workflow from request → approval
 ```bash
 git clone https://github.com/coder-aman-sahu/rentillegence.git
 cd rentillegence
+
+### **2. Install Dependencies**
+```bash
+npm install
+
+###**3. Environment Configuration**
+Create a .env file in the root directory and add the following keys:
+```bash
+# Database
+ATLASDB_URL=your_mongodb_atlas_connection_string
+
+# Session Secret
+SECRET=your_session_secret_phrase
+
+# Image Storage (Cloudinary)
+CLOUD_NAME=your_cloudinary_cloud_name
+CLOUD_API_KEY=your_cloudinary_api_key
+CLOUD_API_SECRET=your_cloudinary_api_secret
+
+# Maps (Mapbox)
+MAP_TOKEN=your_mapbox_public_token
+
+# AI (Google Gemini)
+GEMINI_API_KEY=your_gemini_api_key
+
+# Google OAuth
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+
+###**4. Database Initialization**
+Seed the database with sample listings and generate their AI embeddings.
+```bash
+# Seed listings
+node init/index.js
+
+# Generate AI embeddings
+node scripts/generateEmbeddings.js
+
+###**5. Run the Server**
+```bash
+node app.js
+# or if you have nodemon installed
+nodemon app.js
+
+Visit → http://localhost:8080
+
+📖 Usage Guide
+1. Sign Up / Login
+Create an account using email or sign in quickly with Google OAuth.
+
+2. Explore Homes
+Standard Search: Use filters to find properties by price or location.
+
+AI Search: Use natural language to describe what you want (e.g., "Modern apartment with a gym").
+
+Map View: Explore properties geographically on the interactive map.
+
+3. List a Property
+Go to "Add New Listing".
+
+Upload images and add property details.
+
+The system will auto-geocode the address for map placement.
+
+4. Book a Home
+Click Rent Now on a listing.
+
+Track your request status in My Dashboard.
+
+After Approval: Generate and view the rental agreement.
+
+Sign & Pay: Digitally sign the agreement and complete the payment simulation to get "Booking Confirmed".
+
+📂 Project Structure
+Plaintext
+
+rentillegence/
+├── controllers/      # Listing, User, Booking, AI search logic
+├── init/             # DB seeding scripts
+├── models/           # Mongoose Schemas
+├── public/           # Static assets (CSS, JS, Images)
+├── routes/           # Express routes
+├── scripts/          # Embedding generator scripts
+├── utils/            # Error handlers, async wrappers
+├── views/            # EJS templates
+│   ├── includes/     # Navbar, Footer, Flash
+│   ├── layouts/      # Main layouts
+│   ├── listings/     # Listing-related pages
+│   └── users/        # Auth + Dashboard
+├── app.js            # App entry point
+└── package.json
+🤝 Contributing
+Contributions are welcome! Please follow these steps:
+
+Fork the repository.
+
+Create your feature branch:
+
+```bash
+
+git checkout -b feature/AmazingFeature
+
+Commit your changes:
+
+B```bash
+
+git commit -m "Add AmazingFeature"
+
+Push to the branch:
+
+```bash
+
+git push origin feature/AmazingFeature
+
+Open a Pull Request.
+
+📞 Contact
+Aman Sahu GitHub: coder-aman-sahu
+
+Note: This project is for educational purposes. The payment gateway and e-signatures are simulations.
+
